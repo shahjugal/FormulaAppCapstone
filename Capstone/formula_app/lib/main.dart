@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_ui.dart';
+import 'SchoolsUI.dart';
 
 void main() => runApp(MyApp());
 
@@ -7,9 +7,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Engineering Streams',
+      title: 'Schools',
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: HomeUI(),
+      home: SchoolUI(),
     );
   }
 }

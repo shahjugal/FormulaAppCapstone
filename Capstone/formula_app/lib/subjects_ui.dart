@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'FormulaListUI.dart';
 
-class SubjectsUI extends StatelessWidget {
+class SubjectsUI extends StatefulWidget {
+  @override
+  _SubjectsUIState createState() => _SubjectsUIState();
+}
+
+class _SubjectsUIState extends State<SubjectsUI> {
   final List<String> subjects = [
     'Thermodynamics',
     'Mechanics of Materials',
@@ -24,6 +28,48 @@ class SubjectsUI extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  String newSubjectName = '';
+                  return AlertDialog(
+                    title: Text('New Subject'),
+                    content: TextField(
+                      onChanged: (value) {
+                        newSubjectName = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Enter subject name',
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('CANCEL'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: Text('CREATE'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          // TODO: create new subject with newSubjectName
+                          setState(() {
+                            subjects.add(newSubjectName);
+                          });
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Colors.grey[900],
         elevation: 0,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:formula_app/formuladetailsscreen.dart';
 
-class FormulaListUI extends StatelessWidget {
-  final List<String> formulas = [
+class FormulaListUI extends StatefulWidget {
+  @override
+  _FormulaListUIState createState() => _FormulaListUIState();
+}
+
+class _FormulaListUIState extends State<FormulaListUI> {
+  List<String> formulas = [
     'First law of thermodynamics',
     'Second law of thermodynamics',
     'Carnot cycle',
@@ -26,6 +31,46 @@ class FormulaListUI extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.grey[900],
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  String newFormulaName = '';
+                  return AlertDialog(
+                    title: Text('New Formula'),
+                    content: TextField(
+                      onChanged: (value) {
+                        newFormulaName = value;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Enter formula name',
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('CANCEL'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: Text('CREATE'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          formulas.add(newFormulaName);
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.grey[900],
       body: ListView.builder(
