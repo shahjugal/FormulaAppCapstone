@@ -29,11 +29,14 @@ class _FormulaListUIState extends State<FormulaListUI> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -72,7 +75,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: formulas.length,
         itemBuilder: (BuildContext context, int index) {
@@ -80,12 +83,12 @@ class _FormulaListUIState extends State<FormulaListUI> {
             padding: EdgeInsets.only(left: 10.0, right: 10.0),
             child: Card(
               elevation: 4.0,
-              color: Colors.grey[800],
+              color: Colors.white,
               child: ListTile(
                 title: Text(
                   formulas[index],
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 onTap: () {

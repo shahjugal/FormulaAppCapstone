@@ -21,46 +21,48 @@ class _StreamsUIState extends State<StreamsUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Engineering Streams',
+        title: const Text(
+          'Engineering Majors',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   String newStreamName = '';
                   return AlertDialog(
-                    title: Text('New Stream'),
+                    title: const Text('New Stream'),
                     content: TextField(
                       onChanged: (value) {
                         newStreamName = value;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Enter stream name',
                       ),
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('CANCEL'),
+                        child: const Text('CANCEL'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       TextButton(
-                        child: Text('CREATE'),
+                        child: const Text('CREATE'),
                         onPressed: () {
                           Navigator.of(context).pop();
-                          // TODO: create new stream with newStreamName
                           engineeringStreams.add(newStreamName);
                           setState(() {});
                         },
@@ -73,7 +75,7 @@ class _StreamsUIState extends State<StreamsUI> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: GridView.count(
@@ -97,7 +99,7 @@ class _StreamsUIState extends State<StreamsUI> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.grey[800],
+                color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
@@ -116,7 +118,7 @@ class _StreamsUIState extends State<StreamsUI> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                           letterSpacing: 1.2,
                         ),
                         textAlign: TextAlign.center,

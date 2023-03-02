@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:formula_app/SearchUI.dart';
 import 'package:formula_app/StreamsUI.dart';
 import 'subjects_ui.dart';
 
@@ -58,7 +60,7 @@ class _SchoolUIState extends State<SchoolUI> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        color: Colors.grey[800],
+        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -86,17 +88,32 @@ class _SchoolUIState extends State<SchoolUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.search),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchUI(),
+            ),
+          );
+        },
+      ),
       appBar: AppBar(
         title: Text(
           'Schools',
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -135,11 +152,11 @@ class _SchoolUIState extends State<SchoolUI> {
             },
           ),
         ],
-        centerTitle: true,
-        backgroundColor: Colors.grey[900],
         elevation: 0,
+        centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: GridView.count(
@@ -195,7 +212,7 @@ class _SchoolUIState extends State<SchoolUI> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.grey[800],
+                color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
@@ -214,7 +231,7 @@ class _SchoolUIState extends State<SchoolUI> {
                         style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                           letterSpacing: 1.2,
                         ),
                         textAlign: TextAlign.center,

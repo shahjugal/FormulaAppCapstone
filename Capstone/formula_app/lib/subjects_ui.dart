@@ -30,7 +30,10 @@ class _SubjectsUIState extends State<SubjectsUI> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
@@ -71,10 +74,10 @@ class _SubjectsUIState extends State<SubjectsUI> {
           ),
         ],
         centerTitle: true,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
       ),
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: subjects.length,
         itemBuilder: (BuildContext context, int index) {
@@ -82,12 +85,12 @@ class _SubjectsUIState extends State<SubjectsUI> {
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: Card(
               elevation: 4.0,
-              color: Colors.grey[800],
+              color: Colors.white,
               child: ListTile(
                 title: Text(
                   subjects[index],
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 onTap: () {

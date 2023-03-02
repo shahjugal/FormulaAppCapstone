@@ -31,7 +31,7 @@ class FormulaDetailsScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
       ),
       body: SingleChildScrollView(
