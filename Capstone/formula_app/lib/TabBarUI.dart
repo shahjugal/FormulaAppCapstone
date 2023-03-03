@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:formula_app/SchoolsUI.dart';
 
+import 'BookMarksUI.dart';
 import 'SearchUI.dart';
+import 'Settings.dart';
 
 class TabSelectorUI extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _TabSelectorUIState extends State<TabSelectorUI>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -28,22 +30,82 @@ class _TabSelectorUIState extends State<TabSelectorUI>
           SchoolUI(),
           // Scaffold for tab2
           SearchUI(),
+          BookMarksUI(),
+          SettingsUI(),
         ],
       ),
       bottomNavigationBar: TabBar(
         controller: _tabController,
         tabs: [
-          Tab(icon: Icon(Icons.list, color: Theme.of(context).primaryColor)),
           Tab(
-              icon: Icon(
-            Icons.search,
-            color: Theme.of(context).primaryColor,
+              icon: Column(
+            children: [
+              Icon(Icons.home_outlined, color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
+              ),
+              Text("Home", style: TextStyle(fontSize: 12)),
+            ],
+          )),
+          Tab(
+              icon: Column(
+            children: [
+              Icon(Icons.search, color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
+              ),
+              Expanded(
+                child: Text(
+                  "Search",
+                  style: TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          )),
+          Tab(
+              icon: Column(
+            children: [
+              Icon(Icons.bookmark_border_outlined,
+                  color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
+              ),
+              Expanded(
+                child: Text(
+                  "Bookmarks",
+                  style: TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          )),
+          Tab(
+              icon: Column(
+            children: [
+              Icon(Icons.settings_outlined,
+                  color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
+              ),
+              Expanded(
+                child: Text(
+                  "Settings",
+                  style: TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           )),
         ],
         labelColor: Theme.of(context).primaryColor,
+        enableFeedback: true,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        dividerColor: Theme.of(context).primaryColor,
         indicatorSize: TabBarIndicatorSize.label,
-        indicatorPadding: EdgeInsets.all(5.0),
+        indicatorPadding: EdgeInsets.only(top: 5.0),
         indicatorColor: Theme.of(context).primaryColor,
+        physics: BouncingScrollPhysics(),
       ),
     );
   }
