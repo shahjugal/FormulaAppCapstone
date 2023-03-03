@@ -13,6 +13,7 @@ class _SchoolUIState extends State<SchoolUI> {
     'Science',
     'Arts',
     'Business',
+    'Engineering'
   ];
 
   @override
