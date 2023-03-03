@@ -37,41 +37,7 @@ class _StreamsUIState extends State<StreamsUI> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  String newStreamName = '';
-                  return AlertDialog(
-                    title: const Text('New Stream'),
-                    content: TextField(
-                      onChanged: (value) {
-                        newStreamName = value;
-                      },
-                      decoration: const InputDecoration(
-                        hintText: 'Enter stream name',
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('CANCEL'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('CREATE'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          engineeringStreams.add(newStreamName);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: () {},
           ),
         ],
       ),

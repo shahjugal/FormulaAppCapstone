@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'SchoolsUI.dart';
+import 'TabBarUI.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.blue,
           appBarTheme: const AppBarTheme(
               backgroundColor: Color.fromARGB(255, 255, 255, 255))),
-      home: SchoolUI(),
+      home: TabSelectorUI(),
     );
   }
 }

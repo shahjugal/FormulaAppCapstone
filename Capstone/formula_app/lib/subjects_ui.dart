@@ -34,43 +34,7 @@ class _SubjectsUIState extends State<SubjectsUI> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  String newSubjectName = '';
-                  return AlertDialog(
-                    title: Text('New Subject'),
-                    content: TextField(
-                      onChanged: (value) {
-                        newSubjectName = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter subject name',
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('CANCEL'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text('CREATE'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          // TODO: create new subject with newSubjectName
-                          setState(() {
-                            subjects.add(newSubjectName);
-                          });
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: () {},
           ),
         ],
         centerTitle: true,

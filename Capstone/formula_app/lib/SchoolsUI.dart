@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:formula_app/SearchUI.dart';
 import 'package:formula_app/StreamsUI.dart';
-import 'subjects_ui.dart';
 
 class SchoolUI extends StatefulWidget {
   @override
@@ -16,89 +15,9 @@ class _SchoolUIState extends State<SchoolUI> {
     'Business',
   ];
 
-  Widget _buildCategoryCard(String category) {
-    return GestureDetector(
-      onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Delete School'),
-              content: Text('Are you sure you want to delete $category?'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('CANCEL'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('DELETE'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    // TODO: delete school with category name
-                    schoolCategories.remove(category);
-                    setState(() {});
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
-      onTap: () {
-        // navigate to subjects UI when category is tapped
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StreamsUI(),
-          ),
-        );
-      },
-      child: Card(
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.school,
-              size: 50.0,
-              color: Theme.of(context).primaryColor,
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              category,
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SearchUI(),
-            ),
-          );
-        },
-      ),
       appBar: AppBar(
         title: Text(
           'Schools',
@@ -114,42 +33,7 @@ class _SchoolUIState extends State<SchoolUI> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  String newSchoolName = '';
-                  return AlertDialog(
-                    title: Text('New School'),
-                    content: TextField(
-                      onChanged: (value) {
-                        newSchoolName = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter school name',
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('CANCEL'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text('CREATE'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          // TODO: create new school with newSchoolName
-                          schoolCategories.add(newSchoolName);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: () {},
           ),
         ],
         elevation: 0,
@@ -168,36 +52,6 @@ class _SchoolUIState extends State<SchoolUI> {
             final int index = entry.key;
             final String category = entry.value;
             return GestureDetector(
-              onLongPress: () {
-                // show delete icon when grid is long pressed
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Delete School?'),
-                      content:
-                          Text('Are you sure you want to delete $category?'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('CANCEL'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        TextButton(
-                          child: Text('DELETE'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            // TODO: delete school at index
-                            schoolCategories.removeAt(index);
-                            setState(() {});
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
               onTap: () {
                 // navigate to subjects UI when category is tapped
                 Navigator.push(

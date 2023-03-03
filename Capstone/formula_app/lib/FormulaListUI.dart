@@ -37,41 +37,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  String newFormulaName = '';
-                  return AlertDialog(
-                    title: Text('New Formula'),
-                    content: TextField(
-                      onChanged: (value) {
-                        newFormulaName = value;
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Enter formula name',
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('CANCEL'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: Text('CREATE'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          formulas.add(newFormulaName);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+            onPressed: () {},
           ),
         ],
       ),
