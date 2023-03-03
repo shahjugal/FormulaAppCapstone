@@ -21,15 +21,6 @@ class _TabSelectorUIState extends State<TabSelectorUI>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(icon: Icon(Icons.list)),
-            Tab(icon: Icon(Icons.search)),
-          ],
-        ),
-      ),
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -38,6 +29,21 @@ class _TabSelectorUIState extends State<TabSelectorUI>
           // Scaffold for tab2
           SearchUI(),
         ],
+      ),
+      bottomNavigationBar: TabBar(
+        controller: _tabController,
+        tabs: [
+          Tab(icon: Icon(Icons.list, color: Theme.of(context).primaryColor)),
+          Tab(
+              icon: Icon(
+            Icons.search,
+            color: Theme.of(context).primaryColor,
+          )),
+        ],
+        labelColor: Theme.of(context).primaryColor,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicatorPadding: EdgeInsets.all(5.0),
+        indicatorColor: Theme.of(context).primaryColor,
       ),
     );
   }
