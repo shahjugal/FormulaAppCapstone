@@ -118,51 +118,109 @@ class _SchoolUIState extends State<SchoolUI> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.school,
-                                          size: 50.0,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        const SizedBox(height: 16.0),
-                                        Text(
-                                          data['name'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            letterSpacing: 1.2,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Column(
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        // handle edit icon tap
+                                      },
+                                    ),
                                     IconButton(
                                       icon: Icon(Icons.delete),
                                       onPressed: () {
-                                        // Delete logic here
+                                        // handle delete icon tap
                                       },
                                     ),
                                   ],
                                 ),
+                                Expanded(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.school,
+                                      size: 50.0,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: 10,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      data['name'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        letterSpacing: 1.2,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
+                          // Card(
+                          //   elevation: 4.0,
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(10.0),
+                          //   ),
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Expanded(
+                          //         child: Padding(
+                          //           padding: const EdgeInsets.all(16.0),
+                          //           child: Column(
+                          //             mainAxisAlignment:
+                          //                 MainAxisAlignment.center,
+                          //             children: [
+                          //               Icon(
+                          //                 Icons.school,
+                          //                 size: 50.0,
+                          //                 color: Theme.of(context).primaryColor,
+                          //               ),
+                          //               const SizedBox(height: 16.0),
+                          //               Text(
+                          //                 data['name'],
+                          //                 overflow: TextOverflow.ellipsis,
+                          //                 maxLines: 2,
+                          //                 style: const TextStyle(
+                          //                   fontSize: 16.0,
+                          //                   fontWeight: FontWeight.bold,
+                          //                   color: Colors.black,
+                          //                   letterSpacing: 1.2,
+                          //                 ),
+                          //                 textAlign: TextAlign.center,
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //       Column(
+                          //         children: [
+                          //           IconButton(
+                          //             icon: Icon(Icons.delete),
+                          //             onPressed: () {
+                          //               // Delete logic here
+                          //             },
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
                         );
                       }).toList(),
                     ),

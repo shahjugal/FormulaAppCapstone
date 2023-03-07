@@ -115,71 +115,79 @@ class _StreamsUIState extends State<StreamsUI> {
                         Map<String, dynamic> data =
                             document.data() as Map<String, dynamic>;
                         return GestureDetector(
-                            onTap: () {
-                              // navigate to subjects UI when category is tapped
+                          onTap: () {
+                            // navigate to subjects UI when category is tapped
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SubjectsUI(
-                                    schoolDocId: widget.schoolDocId,
-                                    majorDocId: document.id,
-                                    majorName: data['name'],
-                                  ),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectsUI(
+                                  schoolDocId: widget.schoolDocId,
+                                  majorDocId: document.id,
+                                  majorName: data['name'],
                                 ),
-                              );
-                            },
-                            child: Card(
-                              elevation: 4.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.school,
-                                            size: 50.0,
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          Text(
-                                            data['name'],
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
-                                            style: const TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              letterSpacing: 1.2,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
+                            );
+                          },
+                          child: Card(
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.edit),
+                                      onPressed: () {
+                                        // handle edit icon tap
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.delete),
+                                      onPressed: () {
+                                        // handle delete icon tap
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.school,
+                                      size: 50.0,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
-                                  Column(
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(Icons.delete),
-                                        onPressed: () {
-                                          // Delete logic here
-                                        },
-                                      ),
-                                    ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: 10,
                                   ),
-                                ],
-                              ),
-                            ));
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      data['name'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        letterSpacing: 1.2,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       }).toList(),
                     ),
                   );
