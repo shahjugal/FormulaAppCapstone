@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'formuladetailsscreen.dart';
 
 class SearchResultsUI extends StatefulWidget {

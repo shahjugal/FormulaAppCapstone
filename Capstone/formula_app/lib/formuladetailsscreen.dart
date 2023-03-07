@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class FormulaDetailsScreen extends StatelessWidget {
-  final String? name;
-  final String? description;
-  final String? latexString;
+  final String name;
+  final String description;
+  final String formula;
   final List<String> applications;
   final List<String> links;
   final List<String> relatedCourses;
   final List<String> tags;
 
   FormulaDetailsScreen({
-    this.name,
-    this.description,
-    this.latexString,
+    required this.name,
+    required this.description,
+    required this.formula,
     required this.applications,
     required this.links,
     required this.relatedCourses,
@@ -24,7 +24,7 @@ class FormulaDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          name ?? '',
+          name,
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -39,9 +39,9 @@ class FormulaDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(description ?? ''),
+            Text(description),
             SizedBox(height: 16.0),
-            Text(latexString ?? ''),
+            Text(formula),
             SizedBox(height: 16.0),
             Text(
               'Applications:',
@@ -50,7 +50,13 @@ class FormulaDetailsScreen extends StatelessWidget {
             SizedBox(height: 8.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: applications.map((app) => Text('• $app')).toList(),
+              children: applications
+                  .map(
+                    (app) => Text(
+                      ('• ' + (' $app').trim()),
+                    ),
+                  )
+                  .toList(),
             ),
             SizedBox(height: 16.0),
             Text(
@@ -70,7 +76,7 @@ class FormulaDetailsScreen extends StatelessWidget {
                       width: 100.0,
                       child: Card(
                         child: Center(
-                          child: Text(links[index]),
+                          child: Text(links[index].trim()),
                         ),
                       ),
                     ),
@@ -87,7 +93,7 @@ class FormulaDetailsScreen extends StatelessWidget {
             Wrap(
               spacing: 8.0,
               children: relatedCourses
-                  .map((course) => Chip(label: Text(course)))
+                  .map((course) => Chip(label: Text((course).trim())))
                   .toList(),
             ),
             SizedBox(height: 16.0),
@@ -98,7 +104,8 @@ class FormulaDetailsScreen extends StatelessWidget {
             SizedBox(height: 8.0),
             Wrap(
               spacing: 8.0,
-              children: tags.map((tag) => Chip(label: Text(tag))).toList(),
+              children:
+                  tags.map((tag) => Chip(label: Text(tag.trim()))).toList(),
             ),
           ],
         ),

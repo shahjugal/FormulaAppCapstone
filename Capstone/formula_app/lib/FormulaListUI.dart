@@ -1,28 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:formula_app/SchoolsUI.dart';
+import 'package:formula_app/addFormulaDetails.dart';
 import 'package:formula_app/formuladetailsscreen.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 
 class FormulaListUI extends StatefulWidget {
+  final String schoolDocId;
+  final String majorDocId;
+  final String courseDocId;
+  final String courseName;
+
+  FormulaListUI({
+    super.key,
+    required this.courseDocId,
+    required this.majorDocId,
+    required this.schoolDocId,
+    required this.courseName,
+  });
+
   @override
   _FormulaListUIState createState() => _FormulaListUIState();
 }
 
 class _FormulaListUIState extends State<FormulaListUI> {
-  List<String> formulas = [
-    'First law of thermodynamics',
-    'Second law of thermodynamics',
-    'Carnot cycle',
-    'Entropy',
-    'Enthalpy',
-    'Heat capacity',
-    'Ideal gas law',
-  ];
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var stream = FirebaseFirestore.instance
+        .collection('FormulaApp')
+        .doc(widget.schoolDocId)
+        .collection('majors')
+        .doc(widget.majorDocId)
+        .collection('courses')
+        .doc(widget.courseDocId)
+        .collection('formula');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Formulas',
+          widget.courseName,
           style: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
@@ -37,62 +67,79 @@ class _FormulaListUIState extends State<FormulaListUI> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddFormulaDetails(
+                    courseDocId: widget.courseDocId,
+                    courseName: widget.courseName,
+                    majorDocId: widget.majorDocId,
+                    schoolDocId: widget.schoolDocId,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
       backgroundColor: Colors.white,
-      body: ListView.builder(
-        itemCount: formulas.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Card(
-              elevation: 4.0,
-              color: Colors.white,
-              child: ListTile(
-                title: Text(
-                  formulas[index],
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FormulaDetailsScreen(
-                        name: 'Ideal Gas Law',
-                        description:
-                            'The ideal gas law relates the pressure, volume, temperature, and number of particles of an ideal gas in a closed system.',
-                        latexString: 'PV = nRT',
-                        applications: [
-                          'Calculating the pressure, volume, or temperature of a gas in a closed system',
-                          'Determining the number of moles of gas in a system',
-                          'Estimating the behavior of real gases under different conditions',
-                        ],
-                        links: [
-                          'https://en.wikipedia.org/wiki/Ideal_gas_law',
-                          'https://www.khanacademy.org/science/chemistry/gases-and-kinetic-molecular-theory/ideal-gas-laws/v/what-is-the-ideal-gas-law',
-                          'https://www.chem.purdue.edu/gchelp/howtosolveit/Gases/IdealGasLaw.htm',
-                        ],
-                        relatedCourses: [
-                          'Thermodynamics',
-                          'Physical Chemistry',
-                          'Chemical Engineering',
-                        ],
-                        tags: [
-                          'thermodynamics',
-                          'gas laws',
-                          'chemistry',
-                        ],
-                      ),
-                    ),
+      body: StreamBuilder(
+        stream: stream.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return const Center(
+                child: Text('please wait'),
+              );
+            default:
+              if (snapshot.hasData) {
+                // print(snapshot.data!.docs.length);
+                if (snapshot.data!.docs.isEmpty) {
+                  return const Center(
+                    child: Text('no record found'),
                   );
-                },
-              ),
-            ),
-          );
+                } else {
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data() as Map<String, dynamic>;
+
+                      return Card(
+                        child: ListTile(
+                          title: Text(data['name']),
+                          trailing: Icon(Icons.delete),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FormulaDetailsScreen(
+                                  applications:
+                                      (data['applications'].split(';')),
+                                  description: data['description'],
+                                  formula: data['formula'],
+                                  name: data['name'],
+                                  tags: data['tags'].split(';'),
+                                  links: data['links'].split(';'),
+                                  relatedCourses:
+                                      data['relatedcourses'].split(';'),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }
+              } else {
+                return const Center(
+                  child: Text('getting error'),
+                );
+              }
+          }
         },
       ),
     );
