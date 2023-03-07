@@ -64,77 +64,159 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add New Formula'),
+        title: const Text(
+          'Add Formula',
+        ),
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Name'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Name'),
-            controller: nameController,
-          ),
-          const Text('Description'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Description'),
-            controller: descriptionController,
-          ),
-          const Text('Formula'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Formula'),
-            controller: formulaController,
-          ),
-          const Text('Application'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Application'),
-            controller: applicationsController,
-          ),
-          const Text('Links'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Links'),
-            controller: linksController,
-          ),
-          const Text('Related Courses'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Related Courses'),
-            controller: relatedCoursesController,
-          ),
-          const Text('Tags'),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(hintText: 'Enter New Tags'),
-            controller: tagsController,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await stream.add({
-                'name': nameController.text,
-                'description': descriptionController.text,
-                'applications': applicationsController.text,
-                'tags': tagsController.text,
-                'relatedcourses': relatedCoursesController.text,
-                'links': linksController.text,
-                'formula': formulaController.text,
-              });
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Name',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: 'Enter New Name',
+                border: OutlineInputBorder(),
+              ),
+              controller: nameController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Description',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Description',
+                border: OutlineInputBorder(),
+              ),
+              controller: descriptionController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Formula',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Formula',
+                border: OutlineInputBorder(),
+              ),
+              controller: formulaController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Application',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Application',
+                border: OutlineInputBorder(),
+              ),
+              controller: applicationsController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Links',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Links',
+                border: OutlineInputBorder(),
+              ),
+              controller: linksController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Related Courses',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Related Courses',
+                border: OutlineInputBorder(),
+              ),
+              controller: relatedCoursesController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Tags',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter New Tags',
+                border: OutlineInputBorder(),
+              ),
+              controller: tagsController,
+            ),
+            SizedBox(height: 32),
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  await stream.add({
+                    'name': nameController.text,
+                    'description': descriptionController.text,
+                    'applications': applicationsController.text,
+                    'tags': tagsController.text,
+                    'relatedcourses': relatedCoursesController.text,
+                    'links': linksController.text,
+                    'formula': formulaController.text,
+                  });
 
-              tagsController.clear();
-              relatedCoursesController.clear();
-              linksController.clear();
-              applicationsController.clear();
-              formulaController.clear();
-              descriptionController.clear();
-              nameController.clear();
-            },
-            child: const Text('Submit'),
-          )
-        ],
+                  tagsController.clear();
+                  relatedCoursesController.clear();
+                  linksController.clear();
+                  applicationsController.clear();
+                  formulaController.clear();
+                  descriptionController.clear();
+                  nameController.clear();
+                },
+                child: Text('Submit'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+    ;
   }
 }
