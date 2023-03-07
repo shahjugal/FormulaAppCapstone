@@ -30,6 +30,14 @@ class FormulaDetailsScreen extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.bookmark_add),
+            onPressed: () {
+              // Firebase add bookmark for user.
+            },
+          ),
+        ],
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
