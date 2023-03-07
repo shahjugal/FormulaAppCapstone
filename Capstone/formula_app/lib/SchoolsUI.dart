@@ -157,7 +157,7 @@ class _SchoolUIState extends State<SchoolUI> {
                                     child: Text(
                                       data['name'],
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                      maxLines: 1,
                                       style: const TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,

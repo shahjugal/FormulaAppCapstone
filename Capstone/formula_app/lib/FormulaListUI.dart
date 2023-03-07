@@ -110,7 +110,8 @@ class _FormulaListUIState extends State<FormulaListUI> {
                       return Card(
                         child: ListTile(
                           title: Text(data['name']),
-                          trailing: Icon(Icons.delete),
+                          trailing: Wrap(
+                              children: [Icon(Icons.delete), Icon(Icons.edit)]),
                           onTap: () {
                             Navigator.push(
                               context,

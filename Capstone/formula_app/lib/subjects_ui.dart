@@ -114,7 +114,8 @@ class _SubjectsUIState extends State<SubjectsUI> {
                       return Card(
                         child: ListTile(
                           title: Text(data['name']),
-                          trailing: Icon(Icons.delete),
+                          trailing: Wrap(
+                              children: [Icon(Icons.delete), Icon(Icons.edit)]),
                           //subtitle: Text(data['definition']),
                           onTap: () {
                             Navigator.push(
