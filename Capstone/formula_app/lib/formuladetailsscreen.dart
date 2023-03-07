@@ -34,6 +34,12 @@ class FormulaDetailsScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.abc),
+        onPressed: () {
+          // You whiteboard part here.
+        },
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(
