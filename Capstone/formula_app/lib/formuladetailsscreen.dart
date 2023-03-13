@@ -32,7 +32,7 @@ class FormulaDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.bookmark_add),
+            icon: Icon(Icons.bookmark_border_outlined),
             onPressed: () {
               // Firebase add bookmark for user.
             },
@@ -43,7 +43,7 @@ class FormulaDetailsScreen extends StatelessWidget {
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.abc),
+        child: Icon(Icons.draw),
         onPressed: () {
           // You whiteboard part here.
         },

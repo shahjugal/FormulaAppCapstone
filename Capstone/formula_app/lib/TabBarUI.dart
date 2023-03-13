@@ -17,7 +17,7 @@ class _TabSelectorUIState extends State<TabSelectorUI>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -30,8 +30,8 @@ class _TabSelectorUIState extends State<TabSelectorUI>
           SchoolUI(),
           // Scaffold for tab2
           SearchUI(),
-          BookMarksUI(),
-          SettingsUI(),
+          //BookMarksUI(),
+          //SettingsUI(),
         ],
       ),
       bottomNavigationBar: TabBar(
@@ -63,40 +63,40 @@ class _TabSelectorUIState extends State<TabSelectorUI>
               ),
             ],
           )),
-          Tab(
-              icon: Column(
-            children: [
-              Icon(Icons.bookmark_border_outlined,
-                  color: Theme.of(context).primaryColor),
-              SizedBox(
-                height: 2,
-              ),
-              Expanded(
-                child: Text(
-                  "Bookmarks",
-                  style: TextStyle(fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          )),
-          Tab(
-              icon: Column(
-            children: [
-              Icon(Icons.settings_outlined,
-                  color: Theme.of(context).primaryColor),
-              SizedBox(
-                height: 2,
-              ),
-              Expanded(
-                child: Text(
-                  "Settings",
-                  style: TextStyle(fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          )),
+          // Tab(
+          //     icon: Column(
+          //   children: [
+          //     Icon(Icons.bookmark_border_outlined,
+          //         color: Theme.of(context).primaryColor),
+          //     SizedBox(
+          //       height: 2,
+          //     ),
+          //     Expanded(
+          //       child: Text(
+          //         "Bookmarks",
+          //         style: TextStyle(fontSize: 12),
+          //         overflow: TextOverflow.ellipsis,
+          //       ),
+          //     ),
+          //   ],
+          // )),
+          // Tab(
+          //     icon: Column(
+          //   children: [
+          //     Icon(Icons.settings_outlined,
+          //         color: Theme.of(context).primaryColor),
+          //     SizedBox(
+          //       height: 2,
+          //     ),
+          //     Expanded(
+          //       child: Text(
+          //         "Settings",
+          //         style: TextStyle(fontSize: 12),
+          //         overflow: TextOverflow.ellipsis,
+          //       ),
+          //     ),
+          //   ],
+          // )),
         ],
         labelColor: Theme.of(context).primaryColor,
         enableFeedback: true,

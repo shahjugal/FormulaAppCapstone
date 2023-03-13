@@ -210,6 +210,12 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                     formulaController.clear();
                     descriptionController.clear();
                     nameController.clear();
+                    final msg = SnackBar(
+                      content: Text('Formula Added'),
+                      backgroundColor: Colors.green,
+                      padding: EdgeInsets.all(20),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(msg);
                   },
                   child: Text('Submit'),
                 ),

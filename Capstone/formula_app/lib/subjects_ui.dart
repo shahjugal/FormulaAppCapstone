@@ -115,7 +115,37 @@ class _SubjectsUIState extends State<SubjectsUI> {
                         child: ListTile(
                           title: Text(data['name']),
                           trailing: Wrap(
-                              children: [Icon(Icons.delete), Icon(Icons.edit)]),
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('data'),
+                                      content: Text(
+                                          'Are you sure you want to delete?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('cancle'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            stream.doc(document.id).delete();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Delete'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                           //subtitle: Text(data['definition']),
                           onTap: () {
                             Navigator.push(

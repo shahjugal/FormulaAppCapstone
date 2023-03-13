@@ -40,6 +40,16 @@ class _FormulaListUIState extends State<FormulaListUI> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _showDeleteAlert() {
+      return AlertDialog(
+        title: Text('Delete'),
+        content: Container(
+          child: Text('data'),
+        ),
+        actions: [TextButton(onPressed: null, child: Text('data'))],
+      );
+    }
+
     var stream = FirebaseFirestore.instance
         .collection('FormulaApp')
         .doc(widget.schoolDocId)
@@ -110,8 +120,37 @@ class _FormulaListUIState extends State<FormulaListUI> {
                       return Card(
                         child: ListTile(
                           title: Text(data['name']),
-                          trailing: Wrap(
-                              children: [Icon(Icons.delete), Icon(Icons.edit)]),
+                          trailing: Wrap(children: [
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                    title: const Text('data'),
+                                    content: Text(
+                                        'Are you sure you want to delete?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: const Text('cancle'),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          stream.doc(document.id).delete();
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Delete'),
+                                      )
+                                    ],
+                                  ),
+                                );
+                                //stream.doc(document.id).delete();
+                              },
+                            ),
+                          ]),
                           onTap: () {
                             Navigator.push(
                               context,

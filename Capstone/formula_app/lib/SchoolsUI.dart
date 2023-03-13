@@ -43,7 +43,7 @@ class _SchoolUIState extends State<SchoolUI> {
                   controller.clear();
                 },
                 child: Text('Submit'),
-              )
+              ),
             ],
           ),
         );
@@ -126,15 +126,33 @@ class _SchoolUIState extends State<SchoolUI> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.edit),
-                                      onPressed: () {
-                                        // handle edit icon tap
-                                      },
-                                    ),
-                                    IconButton(
                                       icon: Icon(Icons.delete),
                                       onPressed: () {
-                                        // handle delete icon tap
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                            title: const Text('data'),
+                                            content: Text(
+                                                'Are you sure you want to delete?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(),
+                                                child: const Text('cancle'),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  schoolStream
+                                                      .doc(document.id)
+                                                      .delete();
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text('Delete'),
+                                              )
+                                            ],
+                                          ),
+                                        );
                                       },
                                     ),
                                   ],
