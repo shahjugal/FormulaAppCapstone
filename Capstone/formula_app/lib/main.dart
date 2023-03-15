@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:formula_app/RegisterUI.dart';
+import 'package:formula_app/ResetPassword.dart';
 import 'package:formula_app/bookmark_list.dart';
 import 'package:formula_app/test.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'LoginUI.dart';
 import 'SchoolsUI.dart';
 import 'TabBarUI.dart';
 import 'package:firebase_core/firebase_core.dart';
