@@ -1,86 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:formula_app/SchoolsUI.dart';
+
 import 'BookMarksUI.dart';
 import 'SearchUI.dart';
 import 'Settings.dart';
 
 class TabSelectorUI extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TabSelectorUIState();
+  _TabSelectorUIState createState() => _TabSelectorUIState();
 }
 
-class _TabSelectorUIState extends State<TabSelectorUI> {
-  int _currentIndex = 0;
-  final List<Widget> _children = [
-    SchoolUI(),
-    SearchUI(),
-    BookMarksUI(),
-    SettingsUI(),
-  ];
+class _TabSelectorUIState extends State<TabSelectorUI>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Navigator(
-              onGenerateRoute: (settings) {
-                return MaterialPageRoute(
-                  builder: (context) => _children[_currentIndex],
-                );
-              },
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: BottomNavigationBar(
-                elevation: 25,
-                enableFeedback: true,
-                type: BottomNavigationBarType.shifting,
-                selectedItemColor: Theme.of(context).primaryColor,
-                selectedIconTheme:
-                    IconThemeData(color: Theme.of(context).primaryColor),
-                unselectedIconTheme:
-                    IconThemeData(color: Theme.of(context).disabledColor),
-                onTap: onTabTapped,
-                currentIndex: _currentIndex,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.home_outlined,
-                    ),
-                    label: "Home",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.search_outlined,
-                    ),
-                    label: "Search",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.bookmark_border,
-                    ),
-                    label: "Saved",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.settings_outlined,
-                    ),
-                    label: "Updates",
-                  ),
-                ],
+    return Scaffold(
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // Scaffold for tab1
+          SchoolUI(),
+          // Scaffold for tab2
+          SearchUI(),
+          //BookMarksUI(),
+          //SettingsUI(),
+        ],
+      ),
+      bottomNavigationBar: TabBar(
+        controller: _tabController,
+        tabs: [
+          Tab(
+              icon: Column(
+            children: [
+              Icon(Icons.home_outlined, color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
               ),
-            ),
-          ],
-        ),
+              Text("Home", style: TextStyle(fontSize: 12)),
+            ],
+          )),
+          Tab(
+              icon: Column(
+            children: [
+              Icon(Icons.search, color: Theme.of(context).primaryColor),
+              SizedBox(
+                height: 2,
+              ),
+              Expanded(
+                child: Text(
+                  "Search",
+                  style: TextStyle(fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          )),
+          // Tab(
+          //     icon: Column(
+          //   children: [
+          //     Icon(Icons.bookmark_border_outlined,
+          //         color: Theme.of(context).primaryColor),
+          //     SizedBox(
+          //       height: 2,
+          //     ),
+          //     Expanded(
+          //       child: Text(
+          //         "Bookmarks",
+          //         style: TextStyle(fontSize: 12),
+          //         overflow: TextOverflow.ellipsis,
+          //       ),
+          //     ),
+          //   ],
+          // )),
+          // Tab(
+          //     icon: Column(
+          //   children: [
+          //     Icon(Icons.settings_outlined,
+          //         color: Theme.of(context).primaryColor),
+          //     SizedBox(
+          //       height: 2,
+          //     ),
+          //     Expanded(
+          //       child: Text(
+          //         "Settings",
+          //         style: TextStyle(fontSize: 12),
+          //         overflow: TextOverflow.ellipsis,
+          //       ),
+          //     ),
+          //   ],
+          // )),
+        ],
+        labelColor: Theme.of(context).primaryColor,
+        enableFeedback: true,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        dividerColor: Theme.of(context).primaryColor,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicatorPadding: EdgeInsets.only(top: 5.0),
+        indicatorColor: Theme.of(context).primaryColor,
+        physics: BouncingScrollPhysics(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }
