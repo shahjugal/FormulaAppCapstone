@@ -30,10 +30,11 @@ class _SchoolUIState extends State<SchoolUI> {
     Future<String?> openDialog() => showDialog<String>(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('School Name'),
+            title: const Text('School Name'),
             content: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'Enter New School Name'),
+              decoration:
+                  const InputDecoration(hintText: 'Enter New School Name'),
               controller: controller,
             ),
             actions: [
@@ -42,7 +43,7 @@ class _SchoolUIState extends State<SchoolUI> {
                   Navigator.of(context).pop(controller.text);
                   controller.clear();
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ],
           ),
@@ -61,8 +62,7 @@ class _SchoolUIState extends State<SchoolUI> {
             onPressed: () async {
               final newSchoolName = await openDialog();
               if (newSchoolName == null || newSchoolName.isEmpty) return;
-              await schoolStream.add({'name': newSchoolName}).then(
-                  (value) => print('school added'));
+              await schoolStream.add({'name': newSchoolName});
             },
           ),
         ],
@@ -82,7 +82,7 @@ class _SchoolUIState extends State<SchoolUI> {
               );
             default:
               if (snapshot.hasData) {
-                print(snapshot.data!.docs.length);
+                //print(snapshot.data!.docs.length);
                 if (snapshot.data!.docs.isEmpty) {
                   return const Center(
                     child: Text('no record found'),
@@ -101,8 +101,6 @@ class _SchoolUIState extends State<SchoolUI> {
                             document.data() as Map<String, dynamic>;
                         return GestureDetector(
                           onTap: () {
-                            // navigate to subjects UI when category is tapped
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -126,14 +124,14 @@ class _SchoolUIState extends State<SchoolUI> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: const Icon(Icons.delete),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
                                               AlertDialog(
                                             title: const Text('data'),
-                                            content: Text(
+                                            content: const Text(
                                                 'Are you sure you want to delete?'),
                                             actions: [
                                               TextButton(
@@ -167,7 +165,7 @@ class _SchoolUIState extends State<SchoolUI> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     bottom: 10,
                                   ),
                                   child: Padding(
@@ -189,56 +187,6 @@ class _SchoolUIState extends State<SchoolUI> {
                               ],
                             ),
                           ),
-                          // Card(
-                          //   elevation: 4.0,
-                          //   shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(10.0),
-                          //   ),
-                          //   child: Row(
-                          //     crossAxisAlignment: CrossAxisAlignment.center,
-                          //     children: [
-                          //       Expanded(
-                          //         child: Padding(
-                          //           padding: const EdgeInsets.all(16.0),
-                          //           child: Column(
-                          //             mainAxisAlignment:
-                          //                 MainAxisAlignment.center,
-                          //             children: [
-                          //               Icon(
-                          //                 Icons.school,
-                          //                 size: 50.0,
-                          //                 color: Theme.of(context).primaryColor,
-                          //               ),
-                          //               const SizedBox(height: 16.0),
-                          //               Text(
-                          //                 data['name'],
-                          //                 overflow: TextOverflow.ellipsis,
-                          //                 maxLines: 2,
-                          //                 style: const TextStyle(
-                          //                   fontSize: 16.0,
-                          //                   fontWeight: FontWeight.bold,
-                          //                   color: Colors.black,
-                          //                   letterSpacing: 1.2,
-                          //                 ),
-                          //                 textAlign: TextAlign.center,
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       Column(
-                          //         children: [
-                          //           IconButton(
-                          //             icon: Icon(Icons.delete),
-                          //             onPressed: () {
-                          //               // Delete logic here
-                          //             },
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                         );
                       }).toList(),
                     ),

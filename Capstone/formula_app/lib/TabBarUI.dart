@@ -1,111 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:formula_app/SchoolsUI.dart';
+import 'package:formula_app/search_tags.dart';
+import 'package:formula_app/search_tags.dart';
 
-import 'BookMarksUI.dart';
-import 'SearchUI.dart';
 import 'Settings.dart';
 
+import 'bookmark_list.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
 class TabSelectorUI extends StatefulWidget {
+  static const routeName = '/TabBarUI';
+
   @override
   _TabSelectorUIState createState() => _TabSelectorUIState();
 }
 
 class _TabSelectorUIState extends State<TabSelectorUI>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late PersistentTabController _tabController;
+
+  List<Widget> _buildScreens() {
+    return [
+      SchoolUI(),
+      SearchTags(),
+      BookmarkList(),
+      SettingsUI(),
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.home_outlined),
+        activeColorPrimary: Theme.of(context).primaryColor,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.search),
+        activeColorPrimary: Theme.of(context).primaryColor,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.bookmark_border_outlined),
+        activeColorPrimary: Theme.of(context).primaryColor,
+        inactiveColorPrimary: Colors.grey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.settings_outlined),
+        activeColorPrimary: Theme.of(context).primaryColor,
+        inactiveColorPrimary: Colors.grey,
+      ),
+    ];
+  }
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = PersistentTabController(initialIndex: 0);
   }
 
   @override
   Widget build(BuildContext context) {
+    // print("args === ${args.items}");
     return Scaffold(
-      body: TabBarView(
+      body: PersistentTabView(
+        context,
         controller: _tabController,
-        children: [
-          // Scaffold for tab1
-          SchoolUI(),
-          // Scaffold for tab2
-          SearchUI(),
-          //BookMarksUI(),
-          //SettingsUI(),
-        ],
-      ),
-      bottomNavigationBar: TabBar(
-        controller: _tabController,
-        tabs: [
-          Tab(
-              icon: Column(
-            children: [
-              Icon(Icons.home_outlined, color: Theme.of(context).primaryColor),
-              SizedBox(
-                height: 2,
-              ),
-              Text("Home", style: TextStyle(fontSize: 12)),
-            ],
-          )),
-          Tab(
-              icon: Column(
-            children: [
-              Icon(Icons.search, color: Theme.of(context).primaryColor),
-              SizedBox(
-                height: 2,
-              ),
-              Expanded(
-                child: Text(
-                  "Search",
-                  style: TextStyle(fontSize: 12),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          )),
-          // Tab(
-          //     icon: Column(
-          //   children: [
-          //     Icon(Icons.bookmark_border_outlined,
-          //         color: Theme.of(context).primaryColor),
-          //     SizedBox(
-          //       height: 2,
-          //     ),
-          //     Expanded(
-          //       child: Text(
-          //         "Bookmarks",
-          //         style: TextStyle(fontSize: 12),
-          //         overflow: TextOverflow.ellipsis,
-          //       ),
-          //     ),
-          //   ],
-          // )),
-          // Tab(
-          //     icon: Column(
-          //   children: [
-          //     Icon(Icons.settings_outlined,
-          //         color: Theme.of(context).primaryColor),
-          //     SizedBox(
-          //       height: 2,
-          //     ),
-          //     Expanded(
-          //       child: Text(
-          //         "Settings",
-          //         style: TextStyle(fontSize: 12),
-          //         overflow: TextOverflow.ellipsis,
-          //       ),
-          //     ),
-          //   ],
-          // )),
-        ],
-        labelColor: Theme.of(context).primaryColor,
-        enableFeedback: true,
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-        dividerColor: Theme.of(context).primaryColor,
-        indicatorSize: TabBarIndicatorSize.label,
-        indicatorPadding: EdgeInsets.only(top: 5.0),
-        indicatorColor: Theme.of(context).primaryColor,
-        physics: BouncingScrollPhysics(),
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        confineInSafeArea: true,
+        handleAndroidBackButtonPress: true,
+        resizeToAvoidBottomInset: true,
+        stateManagement: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
+        ),
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        itemAnimationProperties: ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: ScreenTransitionAnimation(
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
+        navBarStyle: NavBarStyle.style1,
       ),
     );
   }

@@ -43,10 +43,10 @@ class _SubjectsUIState extends State<SubjectsUI> {
     Future<String?> openDialog() => showDialog<String>(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Subject Name'),
+            title: Text('Course Name'),
             content: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'Enter New Subject Name'),
+              decoration: InputDecoration(hintText: 'Enter New Course Name'),
               controller: controller,
             ),
             actions: [
@@ -130,14 +130,14 @@ class _SubjectsUIState extends State<SubjectsUI> {
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.of(context).pop(),
-                                          child: const Text('cancle'),
+                                          child: const Text('CANCEL'),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
                                             stream.doc(document.id).delete();
                                             Navigator.of(context).pop();
                                           },
-                                          child: const Text('Delete'),
+                                          child: const Text('DELETE'),
                                         )
                                       ],
                                     ),

@@ -42,6 +42,7 @@ dependencies:
   youtube: ^1.0.1
   hive: any
   hive_flutter: any
+  persistent_bottom_nav_bar: ^5.0.2
 
 dev_dependencies:
   flutter_test:

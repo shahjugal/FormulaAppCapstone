@@ -40,10 +40,11 @@ class _StreamsUIState extends State<StreamsUI> {
     Future<String?> openDialog() => showDialog<String>(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Major Name'),
+            title: const Text('Major Name'),
             content: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'Enter New Major Name'),
+              decoration:
+                  const InputDecoration(hintText: 'Enter New Major Name'),
               controller: controller,
             ),
             actions: [
@@ -52,7 +53,7 @@ class _StreamsUIState extends State<StreamsUI> {
                   Navigator.of(context).pop(controller.text);
                   controller.clear();
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               )
             ],
           ),
@@ -62,7 +63,7 @@ class _StreamsUIState extends State<StreamsUI> {
       appBar: AppBar(
         title: Text(
           widget.schoolName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
@@ -79,8 +80,7 @@ class _StreamsUIState extends State<StreamsUI> {
             onPressed: () async {
               final newMajorName = await openDialog();
               if (newMajorName == null || newMajorName.isEmpty) return;
-              await majorStream.add({'name': newMajorName}).then(
-                  (value) => print('major added'));
+              await majorStream.add({'name': newMajorName});
             },
           ),
         ],
@@ -97,7 +97,7 @@ class _StreamsUIState extends State<StreamsUI> {
               );
             default:
               if (snapshot.hasData) {
-                print(snapshot.data!.docs.length);
+                //print(snapshot.data!.docs.length);
                 if (snapshot.data!.docs.isEmpty) {
                   return const Center(
                     child: Text('no record found'),
@@ -116,8 +116,6 @@ class _StreamsUIState extends State<StreamsUI> {
                             document.data() as Map<String, dynamic>;
                         return GestureDetector(
                           onTap: () {
-                            // navigate to subjects UI when category is tapped
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -142,20 +140,20 @@ class _StreamsUIState extends State<StreamsUI> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: const Icon(Icons.delete),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
                                               AlertDialog(
                                             title: const Text('data'),
-                                            content: Text(
+                                            content: const Text(
                                                 'Are you sure you want to delete?'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () =>
                                                     Navigator.of(context).pop(),
-                                                child: const Text('cancle'),
+                                                child: const Text('CANCEL'),
                                               ),
                                               ElevatedButton(
                                                 onPressed: () {
@@ -164,7 +162,7 @@ class _StreamsUIState extends State<StreamsUI> {
                                                       .delete();
                                                   Navigator.of(context).pop();
                                                 },
-                                                child: const Text('Delete'),
+                                                child: const Text('DELETE'),
                                               )
                                             ],
                                           ),
@@ -183,7 +181,7 @@ class _StreamsUIState extends State<StreamsUI> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     bottom: 10,
                                   ),
                                   child: Padding(

@@ -24,8 +24,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
   late TextEditingController formulaController;
   late TextEditingController applicationsController;
   late TextEditingController linksController;
-  late TextEditingController relatedCoursesController;
   late TextEditingController tagsController;
+  late TextEditingController sample1;
+  late TextEditingController sample3;
+  late TextEditingController sample2;
 
   @override
   void initState() {
@@ -35,8 +37,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
     formulaController = TextEditingController();
     applicationsController = TextEditingController();
     linksController = TextEditingController();
-    relatedCoursesController = TextEditingController();
     tagsController = TextEditingController();
+    sample1 = TextEditingController();
+    sample2 = TextEditingController();
+    sample3 = TextEditingController();
   }
 
   @override
@@ -46,8 +50,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
     formulaController.dispose();
     applicationsController.dispose();
     linksController.dispose();
-    relatedCoursesController.dispose();
     tagsController.dispose();
+    sample1.dispose();
+    sample2.dispose();
+    sample3.dispose();
     super.dispose();
   }
 
@@ -77,119 +83,151 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Name',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
                 autofocus: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter New Name',
                   border: OutlineInputBorder(),
                 ),
                 controller: nameController,
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Description',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter New Description',
                   border: OutlineInputBorder(),
                 ),
                 controller: descriptionController,
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Formula',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter New Formula',
                   border: OutlineInputBorder(),
                 ),
                 controller: formulaController,
               ),
-              SizedBox(height: 16),
-              Text(
-                'Application',
+              const SizedBox(height: 16),
+              const Text(
+                'Applications',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter New Application',
+                decoration: const InputDecoration(
+                  hintText: 'Enter New Applications space seperated',
                   border: OutlineInputBorder(),
                 ),
                 controller: applicationsController,
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Links',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter New Links',
                   border: OutlineInputBorder(),
                 ),
                 controller: linksController,
               ),
-              SizedBox(height: 16),
-              Text(
-                'Related Courses',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 8),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Enter New Related Courses',
-                  border: OutlineInputBorder(),
-                ),
-                controller: relatedCoursesController,
-              ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Tags',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Enter New Tags',
                   border: OutlineInputBorder(),
                 ),
                 controller: tagsController,
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 16),
+              const Text(
+                'Sample1',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter New sample1',
+                  border: OutlineInputBorder(),
+                ),
+                controller: sample1,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'sample2',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter New sample2',
+                  border: OutlineInputBorder(),
+                ),
+                controller: sample2,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'sample3',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter New sample3',
+                  border: OutlineInputBorder(),
+                ),
+                controller: sample3,
+              ),
+              const SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
@@ -198,33 +236,31 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                       'description': descriptionController.text,
                       'applications': applicationsController.text,
                       'tags': tagsController.text,
-                      'relatedcourses': relatedCoursesController.text,
                       'links': linksController.text,
                       'formula': formulaController.text,
                     });
 
                     tagsController.clear();
-                    relatedCoursesController.clear();
                     linksController.clear();
                     applicationsController.clear();
                     formulaController.clear();
                     descriptionController.clear();
                     nameController.clear();
-                    final msg = SnackBar(
+                    const msg = SnackBar(
                       content: Text('Formula Added'),
                       backgroundColor: Colors.green,
                       padding: EdgeInsets.all(20),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(msg);
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ),
+              const SizedBox(height: 50),
             ],
           ),
         ),
       ),
     );
-    ;
   }
 }

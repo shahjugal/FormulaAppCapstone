@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:formula_app/SchoolsUI.dart';
 import 'package:formula_app/addFormulaDetails.dart';
 import 'package:formula_app/formuladetailsscreen.dart';
-import 'package:flutter_tex/flutter_tex.dart';
 
 class FormulaListUI extends StatefulWidget {
   final String schoolDocId;
@@ -42,11 +40,16 @@ class _FormulaListUIState extends State<FormulaListUI> {
   Widget build(BuildContext context) {
     Widget _showDeleteAlert() {
       return AlertDialog(
-        title: Text('Delete'),
+        title: const Text('Delete'),
         content: Container(
-          child: Text('data'),
+          child: const Text('data'),
         ),
-        actions: [TextButton(onPressed: null, child: Text('data'))],
+        actions: const [
+          TextButton(
+            onPressed: null,
+            child: Text('data'),
+          ),
+        ],
       );
     }
 
@@ -63,7 +66,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
       appBar: AppBar(
         title: Text(
           widget.courseName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
@@ -73,7 +76,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.add,
               color: Colors.white,
             ),
@@ -105,7 +108,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
               );
             default:
               if (snapshot.hasData) {
-                // print(snapshot.data!.docs.length);
                 if (snapshot.data!.docs.isEmpty) {
                   return const Center(
                     child: Text('no record found'),
@@ -116,55 +118,54 @@ class _FormulaListUIState extends State<FormulaListUI> {
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                       Map<String, dynamic> data =
                           document.data() as Map<String, dynamic>;
-
                       return Card(
                         child: ListTile(
                           title: Text(data['name']),
-                          trailing: Wrap(children: [
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    title: const Text('data'),
-                                    content: Text(
-                                        'Are you sure you want to delete?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: const Text('cancle'),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          stream.doc(document.id).delete();
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Delete'),
-                                      )
-                                    ],
-                                  ),
-                                );
-                                //stream.doc(document.id).delete();
-                              },
-                            ),
-                          ]),
+                          trailing: Wrap(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('data'),
+                                      content: const Text(
+                                          'Are you sure you want to delete?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('cancle'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            stream.doc(document.id).delete();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Delete'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                           onTap: () {
+                            print("formula === ${data['links']}");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FormulaDetailsScreen(
-                                  applications:
-                                      (data['applications'].split(';')),
+                                  applications: (data['applications']),
                                   description: data['description'],
                                   formula: data['formula'],
                                   name: data['name'],
-                                  tags: data['tags'].split(';'),
+                                  tags: data['tags'],
                                   links: data['links'].split(';'),
-                                  relatedCourses:
-                                      data['relatedcourses'].split(';'),
+                                  relatedCourses: data['relatedcourses'],
                                 ),
                               ),
                             );

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
 
-class FormulaDetailsScreen extends StatefulWidget {
+class BookmarkDetailsScreen extends StatefulWidget {
   final String name;
   final String description;
   final String formula;
   final String applications;
   final List<String> links;
   final String relatedCourses;
-
   final String tags;
 
-  FormulaDetailsScreen({
+  BookmarkDetailsScreen({
     required this.name,
     required this.description,
     required this.formula,
@@ -23,15 +21,45 @@ class FormulaDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<FormulaDetailsScreen> createState() => _FormulaDetailsScreenState();
+  State<BookmarkDetailsScreen> createState() => _BookmarkDetailsScreenState();
 }
 
-class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
+class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
   final _bookmarkBox = Hive.box('bookmark_box');
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshBookmark();
+  }
+
+  List<Map<String, dynamic>> _items = [];
+
+  void _refreshBookmark() {
+    final data = _bookmarkBox.keys.map((key) {
+      final item = _bookmarkBox.get(key);
+      print("related courses ${item["relatedcourses"]}");
+      return {
+        "key": key,
+        "name": item["name"],
+        "description": item["description"],
+        "formula": item["formula"],
+        "applications": item["applications"],
+        "links": item["links"],
+        "relatedcourses": item["relatedcourses"],
+        "tags": item["tags"],
+      };
+    }).toList();
+    setState(() {
+      _items = data.reversed.toList();
+      // print("item list ===${_items.length}");
+    });
+  }
 
   Future _createBookmark(Map<String, dynamic> newBookmark) async {
     await _bookmarkBox.add(newBookmark);
-    //  _refreshBookmark();
+    _refreshBookmark();
+    //print("box _refreshBookmark ===== ${_items[3].entries}");
   }
 
   @override
@@ -45,28 +73,6 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bookmark_border_outlined),
-            onPressed: () async {
-              _createBookmark({
-                "name": widget.name,
-                "description": widget.description,
-                "formula": widget.formula,
-                "applications": widget.applications,
-                "links": widget.links,
-                "relatedcourses": widget.relatedCourses,
-                "tags": widget.tags
-              });
-              final msg = SnackBar(
-                content: Text('Formula added to Bookmarks'),
-                backgroundColor: Colors.green,
-                padding: EdgeInsets.all(20),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(msg);
-            },
-          ),
-        ],
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
