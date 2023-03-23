@@ -25,9 +25,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
   late TextEditingController applicationsController;
   late TextEditingController linksController;
   late TextEditingController tagsController;
-  late TextEditingController sample1;
-  late TextEditingController sample3;
-  late TextEditingController sample2;
+  late TextEditingController physicalSignificance;
 
   @override
   void initState() {
@@ -38,9 +36,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
     applicationsController = TextEditingController();
     linksController = TextEditingController();
     tagsController = TextEditingController();
-    sample1 = TextEditingController();
-    sample2 = TextEditingController();
-    sample3 = TextEditingController();
+    physicalSignificance = TextEditingController();
   }
 
   @override
@@ -51,9 +47,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
     applicationsController.dispose();
     linksController.dispose();
     tagsController.dispose();
-    sample1.dispose();
-    sample2.dispose();
-    sample3.dispose();
+    physicalSignificance.dispose();
     super.dispose();
   }
 
@@ -94,11 +88,27 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               TextField(
                 autofocus: true,
                 decoration: const InputDecoration(
-                  hintText: 'Enter New Name',
+                  hintText: 'Enter Name',
                   border: OutlineInputBorder(),
                 ),
                 controller: nameController,
               ),
+              // const SizedBox(height: 16),
+              // const Text(
+              //   'Formula',
+              //   style: TextStyle(
+              //     fontSize: 16,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+              // const SizedBox(height: 8),
+              // TextField(
+              //   decoration: const InputDecoration(
+              //     hintText: 'Enter  Formula',
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   controller: formulaController,
+              // ),
               const SizedBox(height: 16),
               const Text(
                 'Description',
@@ -117,22 +127,6 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Formula',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter New Formula',
-                  border: OutlineInputBorder(),
-                ),
-                controller: formulaController,
-              ),
-              const SizedBox(height: 16),
-              const Text(
                 'Applications',
                 style: TextStyle(
                   fontSize: 16,
@@ -142,10 +136,26 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               const SizedBox(height: 8),
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Enter New Applications space seperated',
+                  hintText: 'Enter  Applications ; seperated',
                   border: OutlineInputBorder(),
                 ),
                 controller: applicationsController,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Physical Significance',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Enter  Physical Significance ; seperated',
+                  border: OutlineInputBorder(),
+                ),
+                controller: physicalSignificance,
               ),
               const SizedBox(height: 16),
               const Text(
@@ -158,7 +168,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               const SizedBox(height: 8),
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Enter New Links',
+                  hintText: 'Enter  Links ; seperated',
                   border: OutlineInputBorder(),
                 ),
                 controller: linksController,
@@ -174,58 +184,25 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               const SizedBox(height: 8),
               TextField(
                 decoration: const InputDecoration(
-                  hintText: 'Enter New Tags',
+                  hintText: 'Enter  Tags ; seperated',
                   border: OutlineInputBorder(),
                 ),
                 controller: tagsController,
               ),
-              const SizedBox(height: 16),
-              const Text(
-                'Sample1',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(
+                height: 16,
               ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter New sample1',
-                  border: OutlineInputBorder(),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
                 ),
-                controller: sample1,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'sample2',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(26, 230, 141, 141),
                 ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter New sample2',
-                  border: OutlineInputBorder(),
+                child: Center(
+                  child: Text("Image Picker Area"),
                 ),
-                controller: sample2,
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'sample3',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter New sample3',
-                  border: OutlineInputBorder(),
-                ),
-                controller: sample3,
               ),
               const SizedBox(height: 32),
               Center(
@@ -256,6 +233,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                   child: const Text('Submit'),
                 ),
               ),
+
               const SizedBox(height: 50),
             ],
           ),
