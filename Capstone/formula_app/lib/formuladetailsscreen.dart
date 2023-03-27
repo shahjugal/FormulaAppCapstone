@@ -89,7 +89,8 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                   backgroundColor: Colors.green,
                   padding: EdgeInsets.all(20),
                 );
-                BookmarkList().createState().Refresh();
+                BookmarkList().createState().RefreshBookMark();
+                BookmarkList().createState().setState(() {});
                 ScaffoldMessenger.of(context).showSnackBar(msg);
               }
               // print(" ==== create bookmark === ${widget.parameterurl}");

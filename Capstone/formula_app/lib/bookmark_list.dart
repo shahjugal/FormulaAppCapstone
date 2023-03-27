@@ -28,11 +28,11 @@ class _BookmarkListState extends State<BookmarkList> {
   List<Map<String, dynamic>> _items = [];
 
   void Refresh() {
-    _refreshBookmark();
+    RefreshBookMark();
     setState(() {});
   }
 
-  void _refreshBookmark() {
+  void RefreshBookMark() {
     final data = _bookmarkBox.keys.map((key) {
       final item = _bookmarkBox.get(key);
       return {
@@ -55,7 +55,7 @@ class _BookmarkListState extends State<BookmarkList> {
   @override
   void initState() {
     super.initState();
-    _refreshBookmark();
+    RefreshBookMark();
   }
 
   @override
@@ -110,8 +110,10 @@ class _BookmarkListState extends State<BookmarkList> {
                             onPressed: () {
                               setState(() async {
                                 await _bookmarkBox.delete(currentItem['key']);
-                                Navigator.of(context).pop();
+
+                                RefreshBookMark();
                               });
+
                               setState(() {});
                             },
                             child: const Text('Delete'),
