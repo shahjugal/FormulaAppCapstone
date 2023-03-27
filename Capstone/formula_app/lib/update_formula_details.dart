@@ -5,25 +5,43 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class AddFormulaDetails extends StatefulWidget {
+class UpdateFormulaDetails extends StatefulWidget {
+  final String name;
+  final String description;
+  final String applications;
+  final String links;
+  final String formulaurl;
+  final String parameterurl;
+  final String physical;
+
   final String schoolDocId;
   final String majorDocId;
   final String courseDocId;
   final String courseName;
+  final String docId;
 
-  const AddFormulaDetails({
-    super.key,
+  final String tags;
+  UpdateFormulaDetails({
+    required this.name,
+    required this.description,
+    required this.applications,
+    required this.links,
+    required this.tags,
+    required this.formulaurl,
+    required this.parameterurl,
+    required this.physical,
     required this.courseDocId,
     required this.majorDocId,
     required this.schoolDocId,
     required this.courseName,
+    required this.docId,
   });
 
   @override
-  State<AddFormulaDetails> createState() => _AddFormulaDetailsState();
+  State<UpdateFormulaDetails> createState() => _UpdateFormulaDetailsState();
 }
 
-class _AddFormulaDetailsState extends State<AddFormulaDetails> {
+class _UpdateFormulaDetailsState extends State<UpdateFormulaDetails> {
   late TextEditingController nameController;
   late TextEditingController descriptionController;
   late TextEditingController applicationsController;
@@ -34,19 +52,18 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController();
-    descriptionController = TextEditingController();
-    applicationsController = TextEditingController();
-    linksController = TextEditingController();
-    tagsController = TextEditingController();
-    physicalSignificance = TextEditingController();
+    nameController = TextEditingController(text: widget.name);
+    descriptionController = TextEditingController(text: widget.description);
+    applicationsController = TextEditingController(text: widget.applications);
+    linksController = TextEditingController(text: widget.links);
+    tagsController = TextEditingController(text: widget.tags);
+    physicalSignificance = TextEditingController(text: widget.physical);
   }
 
   @override
   void dispose() {
     nameController.dispose();
     descriptionController.dispose();
-    // formulaController.dispose();
     applicationsController.dispose();
     linksController.dispose();
     tagsController.dispose();
@@ -72,13 +89,9 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
           FirebaseStorage.instance.ref().child('formula test').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       formulaImageUrl = await imgRef.getDownloadURL();
-      // imgURL = await imgRef.getDownloadURL();
       final formulaimageTemporary = File(imgDevicePath);
       setState(() {
         this.formulaImageFile = formulaimageTemporary;
-
-        print("=== for url mage ====${formulaImageUrl}");
-        // print("=== url mage ====${formulaImageFile}");
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -97,12 +110,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
           FirebaseStorage.instance.ref().child('parameters test').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       parametersImageUrl = await imgRef.getDownloadURL();
-      // imgURL = await imgRef.getDownloadURL();
       final parametersimageTemporary = File(imgDevicePath);
       setState(() {
         this.parameterImageFile = parametersimageTemporary;
 
-        print("=== para url mage ====${parametersImageUrl}");
         // print("=== url mage ====${parameterImageFile}");
       });
     } on PlatformException catch (e) {
@@ -120,7 +131,6 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
         .collection('courses')
         .doc(widget.courseDocId)
         .collection('formula');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -171,16 +181,17 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(width: 1)),
-                child: formulaImageFile != null
-                    ? ClipRRect(
-                        child: Image.file(
+                child: ClipRRect(
+                  child: formulaImageFile == null
+                      ? Image.network(
+                          widget.formulaurl,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.file(
                           formulaImageFile!,
                           fit: BoxFit.cover,
                         ), //Text("No image selected"),
-                      )
-                    : const Center(
-                        child: Text('No image added'),
-                      ),
+                ),
               ),
 
               const SizedBox(height: 24),
@@ -202,16 +213,17 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(width: 1)),
-                child: parameterImageFile != null
-                    ? ClipRRect(
-                        child: Image.file(
+                child: ClipRRect(
+                  child: parameterImageFile == null
+                      ? Image.network(
+                          widget.parameterurl,
+                          fit: BoxFit.fill,
+                        )
+                      : Image.file(
                           parameterImageFile!,
                           fit: BoxFit.fill,
                         ), //Text("No image selected"),
-                      )
-                    : const Center(
-                        child: Text('No image added'),
-                      ),
+                ),
               ),
 
               const SizedBox(height: 24),
@@ -294,26 +306,26 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 ),
                 controller: tagsController,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (formulaImageUrl == null) {
+                      formulaImageUrl = widget.formulaurl;
+                    }
+                    if (parametersImageUrl == null) {
+                      parametersImageUrl = widget.parameterurl;
+                    }
                     if (nameController.text.isEmpty ||
-                        nameController.text == null ||
                         descriptionController.text.isEmpty ||
-                        descriptionController.text == null ||
                         applicationsController.text.isEmpty ||
-                        applicationsController.text == null ||
                         tagsController.text.isEmpty ||
-                        tagsController.text == null ||
                         linksController.text.isEmpty ||
-                        linksController.text == null ||
                         physicalSignificance.text.isEmpty ||
-                        physicalSignificance.text == null ||
                         formulaImageUrl == null ||
                         parametersImageUrl == null) {
                       const erMsg = SnackBar(
@@ -323,9 +335,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(erMsg);
                     } else {
-                      print(
-                          " === for URL add function ==== ${formulaImageUrl}");
-                      await stream.add({
+                      await stream.doc(widget.docId).update({
                         'name': nameController.text,
                         'description': descriptionController.text,
                         'applications': applicationsController.text,
@@ -340,7 +350,6 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                       tagsController.clear();
                       linksController.clear();
                       applicationsController.clear();
-                      // formulaController.clear();
                       descriptionController.clear();
                       nameController.clear();
                       physicalSignificance.clear();

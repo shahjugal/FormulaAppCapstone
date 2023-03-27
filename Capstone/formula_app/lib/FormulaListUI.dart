@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:formula_app/addFormulaDetails.dart';
 import 'package:formula_app/formuladetailsscreen.dart';
+import 'package:formula_app/update_formula_details.dart';
 
 class FormulaListUI extends StatefulWidget {
   final String schoolDocId;
@@ -22,37 +23,22 @@ class FormulaListUI extends StatefulWidget {
 }
 
 class _FormulaListUIState extends State<FormulaListUI> {
-  late TextEditingController controller;
+  // late TextEditingController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController();
+    // controller = TextEditingController();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget _showDeleteAlert() {
-      return AlertDialog(
-        title: const Text('Delete'),
-        content: Container(
-          child: const Text('data'),
-        ),
-        actions: const [
-          TextButton(
-            onPressed: null,
-            child: Text('data'),
-          ),
-        ],
-      );
-    }
-
     var stream = FirebaseFirestore.instance
         .collection('FormulaApp')
         .doc(widget.schoolDocId)
@@ -124,13 +110,40 @@ class _FormulaListUIState extends State<FormulaListUI> {
                           trailing: Wrap(
                             children: [
                               IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateFormulaDetails(
+                                        applications: (data['applications']),
+                                        description: data['description'],
+                                        physical: data['physical'],
+                                        formulaurl: data['formulaurl'],
+                                        parameterurl: data['parameterurl'],
+                                        name: data['name'],
+                                        tags: data['tags'],
+                                        links: data['links'],
+                                        courseDocId: widget.courseDocId,
+                                        courseName: widget.courseName,
+                                        majorDocId: widget.majorDocId,
+                                        schoolDocId: widget.schoolDocId,
+                                        docId: document.id,
+                                        // relatedCourses: data['relatedcourses'],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                              IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                      title: const Text('data'),
+                                      title: const Text('Delete'),
                                       content: const Text(
                                           'Are you sure you want to delete?'),
                                       actions: [
@@ -154,18 +167,20 @@ class _FormulaListUIState extends State<FormulaListUI> {
                             ],
                           ),
                           onTap: () {
-                            print("formula === ${data['links']}");
+                            // print("formula === ${data['relatedcourses']}");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FormulaDetailsScreen(
                                   applications: (data['applications']),
                                   description: data['description'],
-                                  formula: data['formula'],
+                                  physical: data['physical'],
+                                  formulaurl: data['formulaurl'],
+                                  parameterurl: data['parameterurl'],
                                   name: data['name'],
                                   tags: data['tags'],
                                   links: data['links'].split(';'),
-                                  relatedCourses: data['relatedcourses'],
+                                  // relatedCourses: data['relatedcourses'],
                                 ),
                               ),
                             );

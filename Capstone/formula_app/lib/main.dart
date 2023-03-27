@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
-//import 'package:mathjax_render/mathjax_render.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'TabBarUI.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'firebase_options.dart';
 
 late Box box;

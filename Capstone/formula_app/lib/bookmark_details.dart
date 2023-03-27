@@ -4,20 +4,26 @@ import 'package:hive_flutter/hive_flutter.dart';
 class BookmarkDetailsScreen extends StatefulWidget {
   final String name;
   final String description;
-  final String formula;
+  // final String formula;
   final String applications;
   final List<String> links;
-  final String relatedCourses;
+  // final String relatedCourses;
   final String tags;
+  final String formulaurl;
+  final String parameterurl;
+  final String physical;
 
   BookmarkDetailsScreen({
     required this.name,
     required this.description,
-    required this.formula,
+    // required this.formula,
     required this.applications,
     required this.links,
-    required this.relatedCourses,
+    // required this.relatedCourses,
     required this.tags,
+    required this.formulaurl,
+    required this.parameterurl,
+    required this.physical,
   });
 
   @override
@@ -82,9 +88,74 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.description),
+            // ======== name ========= //
+            const Text(
+              'Name:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Text(widget.name),
+
+            // ======== formula URL ========= //
             const SizedBox(height: 16.0),
-            Text(widget.formula),
+            const Text(
+              'Formula / Equation:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            // Text(widget.formulaurl), //////// -----------------------------------//
+            Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 1)),
+              child: widget.formulaurl != null
+                  ? ClipRRect(
+                      child: Image.network(
+                        widget.formulaurl,
+                        fit: BoxFit.cover,
+                      ), //Text("No image selected"),
+                    )
+                  : const Center(
+                      child: Text('No image added'),
+                    ),
+            ),
+            // ======== Parameter URL ========= //
+            const SizedBox(height: 16.0),
+            const Text(
+              'Paramters:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Container(
+              width: double.infinity,
+              height: 400,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 1)),
+              child: widget.parameterurl != null
+                  ? ClipRRect(
+                      child: Image.network(
+                        widget.parameterurl,
+                        fit: BoxFit.fill,
+                      ), //Text("No image selected"),
+                    )
+                  : const Center(
+                      child: Text('No image added'),
+                    ),
+            ),
+
+            // ======== Description ========= //
+            const SizedBox(height: 16.0),
+            const Text(
+              'Description:',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Text(widget.description),
+
+            // ======== Application ========= //
             const SizedBox(height: 16.0),
             const Text(
               'Applications:',
@@ -101,6 +172,17 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
                   )
                   .toList(),
             ),
+
+            //========= Physical significance ========//
+            const SizedBox(height: 16.0),
+            const Text(
+              'Physical significance',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            Text(widget.physical),
+
+            // ======== LInks =========== //
             const SizedBox(height: 16.0),
             const Text(
               'Links:',
@@ -127,18 +209,8 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Related Courses:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Wrap(
-              spacing: 8.0,
-              children: (widget.relatedCourses.split(';'))
-                  .map((course) => Chip(label: Text((course).trim())))
-                  .toList(),
-            ),
+
+            // ======== tags ======= //
             const SizedBox(height: 16.0),
             const Text(
               'Tags:',

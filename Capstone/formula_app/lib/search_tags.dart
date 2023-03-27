@@ -75,12 +75,16 @@ class _SearchTagsState extends State<SearchTags> {
                                   (QueryDocumentSnapshot<Object?> data) {
                                     final String searchTags = data.get('tags');
                                     final String searchName = data.get('name');
-                                    final String searchFomula =
-                                        data.get('formula');
+                                    final String searchPhysical =
+                                        data.get('physical');
+                                    final String searchFormulaurl =
+                                        data.get('formulaurl');
+
+                                    final String searchParameterurl =
+                                        data.get('parameterurl');
+                                    // final String searchFomula =
                                     final String searchDescription =
                                         data.get('description');
-                                    final String searchRelatedcourses =
-                                        data.get('relatedcourses');
                                     final String searchApplications =
                                         data.get('applications');
                                     final String searchLinks =
@@ -127,14 +131,18 @@ class _SearchTagsState extends State<SearchTags> {
                                                 builder: (context) =>
                                                     FormulaDetailsScreen(
                                                   name: searchName,
+                                                  formulaurl: searchFormulaurl,
+                                                  parameterurl:
+                                                      searchParameterurl,
+                                                  physical: searchPhysical,
                                                   description:
                                                       searchDescription,
-                                                  formula: searchFomula,
+                                                  // formula: searchFomula,
                                                   applications:
                                                       searchApplications,
                                                   links: searchLinks.split(';'),
-                                                  relatedCourses:
-                                                      searchRelatedcourses,
+                                                  // relatedCourses:
+                                                  //     searchRelatedcourses,
                                                   tags: searchTags,
                                                 ),
                                               ),
@@ -152,20 +160,7 @@ class _SearchTagsState extends State<SearchTags> {
                               ],
                             );
                     }
-                  })
-              // ListView.builder(
-              //     itemCount: _foundUsers.length,
-              //     itemBuilder: (context, index) => Card(
-              //       elevation: 1,
-              //       margin: const EdgeInsets.symmetric(vertical: 2),
-              //       child: ListTile(
-              //         title: Text(_foundUsers[index]['name']),
-              //         subtitle: Text('${_foundUsers[index]["des"]}'),
-              //       ),
-              //     ),
-              //   )
-
-              ),
+                  })),
         ],
       ),
     );
