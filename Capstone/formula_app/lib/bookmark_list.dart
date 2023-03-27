@@ -111,6 +111,8 @@ class _BookmarkListState extends State<BookmarkList> {
                               setState(() async {
                                 await _bookmarkBox.delete(currentItem['key']);
 
+                                Navigator.of(context).pop();
+
                                 RefreshBookMark();
                               });
 
