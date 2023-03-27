@@ -1,10 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'bookmark_details.dart';
 
 class BookmarkList extends StatefulWidget {
+  static _BookmarkListState? _bookmarkListState;
+
+  static final BookmarkList _singleton = BookmarkList._internal();
+
+  factory BookmarkList() {
+    return _singleton;
+  }
+
+  BookmarkList._internal();
+
   @override
-  State<BookmarkList> createState() => _BookmarkListState();
+  _BookmarkListState createState() {
+    _bookmarkListState ??= _BookmarkListState();
+    return _bookmarkListState!;
+  }
 }
 
 class _BookmarkListState extends State<BookmarkList> {
@@ -12,11 +27,14 @@ class _BookmarkListState extends State<BookmarkList> {
 
   List<Map<String, dynamic>> _items = [];
 
+  void Refresh() {
+    _refreshBookmark();
+    setState(() {});
+  }
+
   void _refreshBookmark() {
     final data = _bookmarkBox.keys.map((key) {
       final item = _bookmarkBox.get(key);
-      // print("key ==== ${key}");
-      print("======= bookmark refresh -======${item["formulaurl"]}");
       return {
         "key": key,
         "name": item["name"],
@@ -38,6 +56,11 @@ class _BookmarkListState extends State<BookmarkList> {
   void initState() {
     super.initState();
     _refreshBookmark();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -89,6 +112,7 @@ class _BookmarkListState extends State<BookmarkList> {
                                 await _bookmarkBox.delete(currentItem['key']);
                                 Navigator.of(context).pop();
                               });
+                              setState(() {});
                             },
                             child: const Text('Delete'),
                           )

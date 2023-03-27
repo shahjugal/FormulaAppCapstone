@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:formula_app/FormulaListUI.dart';
+import 'package:formula_app/bookmark_list.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -87,6 +89,7 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                   backgroundColor: Colors.green,
                   padding: EdgeInsets.all(20),
                 );
+                BookmarkList().createState().Refresh();
                 ScaffoldMessenger.of(context).showSnackBar(msg);
               }
               // print(" ==== create bookmark === ${widget.parameterurl}");
