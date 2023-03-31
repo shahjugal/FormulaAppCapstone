@@ -17,7 +17,8 @@ class _SearchTagsState extends State<SearchTags> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: Text('Search'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         children: [

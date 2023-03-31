@@ -68,6 +68,7 @@ class _BookmarkListState extends State<BookmarkList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bookmarks'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: ListView.builder(
         itemCount: _items.length,

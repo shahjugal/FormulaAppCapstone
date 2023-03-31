@@ -23,7 +23,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Formula App',
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        // Define the default brightness and colors.
+        primaryColor: Color.fromRGBO(128, 18, 20, 1),
+
+        // Define the default font family.
+        fontFamily: 'Georgia',
       ),
       home: TabSelectorUI(),
       routes: {
