@@ -313,9 +313,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                         linksController.text.isEmpty ||
                         linksController.text == null ||
                         physicalSignificance.text.isEmpty ||
-                        physicalSignificance.text == null ||
-                        formulaImageUrl == null ||
-                        parametersImageUrl == null) {
+                        physicalSignificance.text == null) {
                       const erMsg = SnackBar(
                         content: Text('one or more field is emplty!'),
                         backgroundColor: Colors.red,
