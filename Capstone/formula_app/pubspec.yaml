@@ -45,6 +45,9 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   image_picker: any
   firebase_storage: any
+  http: ^0.13.3
+  connectivity: ^3.0.6
+  cached_network_image: any
 
 dev_dependencies:
   flutter_test:
