@@ -11,8 +11,8 @@ class FormulaDetailsScreen extends StatefulWidget {
   final String applications;
   final List<String> links;
   // final String relatedCourses;
-  final String formulaurl;
-  final String parameterurl;
+  final String? formulaurl;
+  final String? parameterurl;
   final String physical;
 
   final String tags;
@@ -25,8 +25,8 @@ class FormulaDetailsScreen extends StatefulWidget {
     required this.links,
     // required this.relatedCourses,
     required this.tags,
-    required this.formulaurl,
-    required this.parameterurl,
+    this.formulaurl,
+    this.parameterurl,
     required this.physical,
   });
 
@@ -131,7 +131,7 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
               child: widget.formulaurl != null
                   ? ClipRRect(
                       child: Image.network(
-                        widget.formulaurl,
+                        widget.formulaurl!,
                         fit: BoxFit.cover,
                       ), //Text("No image selected"),
                     )
@@ -155,7 +155,7 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
               child: widget.parameterurl != null
                   ? ClipRRect(
                       child: Image.network(
-                        widget.parameterurl,
+                        widget.parameterurl!,
                         fit: BoxFit.fill,
                       ), //Text("No image selected"),
                     )
