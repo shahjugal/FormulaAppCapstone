@@ -16,7 +16,16 @@ class NetworkImageWidget extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
-                return const Icon(Icons.error);
+                return Container(
+                    child: Row(
+                  children: [
+                    const Icon(Icons.error),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("Backend URL Issue: Contact jinli")
+                  ],
+                ));
               },
             ),
           )
