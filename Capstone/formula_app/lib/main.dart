@@ -34,6 +34,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final imageUrls = [
+    'https://ahduni.edu.in/site/templates/images/media-photo21.jpg',
+    'https://ahduni.edu.in/site/templates/images/media-photo22.jpg',
+    'https://ahduni.edu.in/site/templates/images/media-photo23.jpg',
+    'https://ahduni.edu.in/site/templates/images/media-photo24.jpg'
+  ];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

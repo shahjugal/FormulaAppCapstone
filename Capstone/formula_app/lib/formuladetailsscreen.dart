@@ -3,6 +3,7 @@ import 'package:formula_app/FormulaListUI.dart';
 import 'package:formula_app/bookmark_list.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FormulaDetailsScreen extends StatefulWidget {
   final String name;
@@ -45,6 +46,17 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
     // print(" ==== _createBookmark newBookmark === ${newBookmark}");
     await _bookmarkBox.add(newBookmark);
     //  _refreshBookmark();
+  }
+
+  String extractDomain(String url) {
+    final uri = Uri.parse(url);
+    final domain = uri.host;
+    final parts = domain.split('.');
+    if (parts.length >= 2) {
+      return parts[parts.length - 2];
+    } else {
+      return domain;
+    }
   }
 
   @override
@@ -215,11 +227,26 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Container(
-                      width: 100.0,
-                      child: Card(
-                        child: Center(
-                          child: Text(widget.links[index].trim()),
+                    child: GestureDetector(
+                      onTap: () async {
+                        final Uri _url = Uri.parse(widget.links[index].trim());
+                        if (!await launchUrl(_url)) {
+                          const erMsg = SnackBar(
+                            content: Text('Error Launching URL!'),
+                            backgroundColor: Colors.red,
+                            padding: EdgeInsets.all(20),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(erMsg);
+                        }
+                      },
+                      child: Container(
+                        child: Chip(
+                          avatar: Icon(Icons.link_outlined),
+                          elevation: 10,
+                          label: Text(
+                            extractDomain(widget.links[index].trim()),
+                            style: TextStyle(color: Colors.blue),
+                          ),
                         ),
                       ),
                     ),
