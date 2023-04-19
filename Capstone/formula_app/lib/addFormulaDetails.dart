@@ -69,9 +69,12 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
       final String imgID =
           "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
-          FirebaseStorage.instance.ref().child('formula test').child(imgID);
+          FirebaseStorage.instance.ref().child('formula').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       formulaImageUrl = await imgRef.getDownloadURL();
+      if (formulaImageUrl == null) {
+        formulaImageUrl = "";
+      }
       // imgURL = await imgRef.getDownloadURL();
       final formulaimageTemporary = File(imgDevicePath);
       setState(() {
@@ -94,9 +97,12 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
       final String imgID =
           "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
-          FirebaseStorage.instance.ref().child('parameters test').child(imgID);
+          FirebaseStorage.instance.ref().child('parameters').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       parametersImageUrl = await imgRef.getDownloadURL();
+      if (parametersImageUrl == null) {
+        parametersImageUrl = "";
+      }
       // imgURL = await imgRef.getDownloadURL();
       final parametersimageTemporary = File(imgDevicePath);
       setState(() {
@@ -171,10 +177,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(width: 1)),
-                child: formulaImageFile != null
+                child: formulaImageUrl != null
                     ? ClipRRect(
-                        child: Image.file(
-                          formulaImageFile!,
+                        child: Image.network(
+                          formulaImageUrl!,
                           fit: BoxFit.cover,
                         ), //Text("No image selected"),
                       )
@@ -202,10 +208,10 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(width: 1)),
-                child: parameterImageFile != null
+                child: parametersImageUrl != null
                     ? ClipRRect(
-                        child: Image.file(
-                          parameterImageFile!,
+                        child: Image.network(
+                          parametersImageUrl!,
                           fit: BoxFit.fill,
                         ), //Text("No image selected"),
                       )
@@ -302,20 +308,25 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
+                    if (formulaImageUrl == null || parametersImageUrl == null) {
+                      formulaImageUrl = "";
+                      parametersImageUrl = "";
+                    }
                     if (nameController.text.isEmpty ||
-                        nameController.text == null ||
-                        descriptionController.text.isEmpty ||
-                        descriptionController.text == null ||
-                        applicationsController.text.isEmpty ||
-                        applicationsController.text == null ||
-                        tagsController.text.isEmpty ||
-                        tagsController.text == null ||
-                        linksController.text.isEmpty ||
-                        linksController.text == null ||
-                        physicalSignificance.text.isEmpty ||
-                        physicalSignificance.text == null ||
-                        formulaImageUrl == null ||
-                        parametersImageUrl == null) {
+                            nameController.text == null ||
+                            descriptionController.text.isEmpty ||
+                            descriptionController.text == null ||
+                            applicationsController.text.isEmpty ||
+                            applicationsController.text == null ||
+                            tagsController.text.isEmpty ||
+                            tagsController.text == null ||
+                            linksController.text.isEmpty ||
+                            linksController.text == null ||
+                            physicalSignificance.text.isEmpty ||
+                            physicalSignificance.text == null
+                        //formulaImageUrl == null ||
+                        // parametersImageUrl == null
+                        ) {
                       const erMsg = SnackBar(
                         content: Text('one or more field is emplty!'),
                         backgroundColor: Colors.red,
