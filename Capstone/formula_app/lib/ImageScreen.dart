@@ -1,10 +1,6 @@
+// ignore: file_names
 import 'dart:async';
-import 'dart:html';
-import 'dart:io';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:formula_app/TabBarUI.dart';
 
 class ImageScreen extends StatefulWidget {
