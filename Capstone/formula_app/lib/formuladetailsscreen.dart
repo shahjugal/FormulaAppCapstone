@@ -5,6 +5,8 @@ import 'package:formula_app/bookmark_list.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'NetworkImageWidget.dart';
+
 class FormulaDetailsScreen extends StatefulWidget {
   final String name;
   final String description;
@@ -134,22 +136,8 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
             ),
             const SizedBox(height: 8.0),
             // Text(widget.formulaurl), //////// -----------------------------------//
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 1)),
-              child: widget.formulaurl != null
-                  ? ClipRRect(
-                      child: Image.network(
-                        widget.formulaurl,
-                        fit: BoxFit.cover,
-                      ), //Text("No image selected"),
-                    )
-                  : const Center(
-                      child: Text('No image added'),
-                    ),
+            NetworkImageWidget(
+              imageUrl: widget.formulaurl,
             ),
             // ======== Parameter URL ========= //
             const SizedBox(height: 16.0),
@@ -158,22 +146,8 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8.0),
-            Container(
-              width: double.infinity,
-              height: 400,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 1)),
-              child: widget.parameterurl != null
-                  ? ClipRRect(
-                      child: Image.network(
-                        widget.parameterurl,
-                        fit: BoxFit.fill,
-                      ), //Text("No image selected"),
-                    )
-                  : const Center(
-                      child: Text('No image added'),
-                    ),
+            NetworkImageWidget(
+              imageUrl: widget.parameterurl,
             ),
 
             // ======== Description ========= //
