@@ -78,6 +78,60 @@ List<Report> reportList = [
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  String title = '';
+                  String issue = '';
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Title',
+                            ),
+                            onChanged: (value) {
+                              title = value;
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Issue',
+                            ),
+                            onChanged: (value) {
+                              issue = value;
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (title.isNotEmpty && issue.isNotEmpty) {
+                                setState(() {
+                                  reportList.add(Report(title: title, issue: issue));
+                                });
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text('SUBMIT'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Icon(Icons.report
+            ),
+            tooltip: "Report a Suggestion/Issue?",
+
+          ),
       appBar: AppBar(
         title: Text(
           widget.name,
@@ -129,232 +183,196 @@ List<Report> reportList = [
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ======== name ========= //
-            const Text(
-              'Name:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Text(widget.name),
-
-            // ======== formula URL ========= //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Formula / Equation:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            // Text(widget.formulaurl), //////// -----------------------------------//
-            NetworkImageWidget(
-              imageUrl: widget.formulaurl,
-            ),
-            // ======== Parameter URL ========= //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Paramters:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            NetworkImageWidget(
-              imageUrl: widget.parameterurl,
-            ),
-
-            // ======== Description ========= //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Description:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Text(widget.description),
-
-            // ======== Application ========= //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Applications:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: ((widget.applications).split(';'))
-                  .map(
-                    (app) => Text(
-                      ('• ' + (' $app').trim()),
-                    ),
-                  )
-                  .toList(),
-            ),
-
-            //========= Physical significance ========//
-            const SizedBox(height: 16.0),
-            const Text(
-              'Physical significance',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            Text(widget.physical),
-
-            // ======== LInks =========== //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Links:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8.0),
-            SizedBox(
-              height: 80.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.links.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        final Uri _url = Uri.parse(widget.links[index].trim());
-                        if (!await launchUrl(_url)) {
-                          const erMsg = SnackBar(
-                            content: Text('Error Launching URL!'),
-                            backgroundColor: Colors.red,
-                            padding: EdgeInsets.all(20),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(erMsg);
-                        }
-                      },
-                      child: Container(
-                        child: Chip(
-                          avatar: Icon(Icons.link_outlined),
-                          elevation: 10,
-                          label: Text(
-                            extractDomain(widget.links[index].trim()),
-                            style: TextStyle(color: Colors.blue),
+      body: Stack(
+        children: [SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ======== name ========= //
+              const Text(
+                'Name:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              Text(widget.name),
+      
+              // ======== formula URL ========= //
+              const SizedBox(height: 16.0),
+              const Text(
+                'Formula / Equation:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              // Text(widget.formulaurl), //////// -----------------------------------//
+              NetworkImageWidget(
+                imageUrl: widget.formulaurl,
+              ),
+              // ======== Parameter URL ========= //
+              const SizedBox(height: 16.0),
+              const Text(
+                'Paramters:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              NetworkImageWidget(
+                imageUrl: widget.parameterurl,
+              ),
+      
+              // ======== Description ========= //
+              const SizedBox(height: 16.0),
+              const Text(
+                'Description:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              Text(widget.description),
+      
+              // ======== Application ========= //
+              const SizedBox(height: 16.0),
+              const Text(
+                'Applications:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: ((widget.applications).split(';'))
+                    .map(
+                      (app) => Text(
+                        ('• ' + (' $app').trim()),
+                      ),
+                    )
+                    .toList(),
+              ),
+      
+              //========= Physical significance ========//
+              const SizedBox(height: 16.0),
+              const Text(
+                'Physical significance',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              Text(widget.physical),
+      
+              // ======== LInks =========== //
+              const SizedBox(height: 16.0),
+              const Text(
+                'Links:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              SizedBox(
+                height: 80.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: widget.links.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: GestureDetector(
+                        onTap: () async {
+                          final Uri _url = Uri.parse(widget.links[index].trim());
+                          if (!await launchUrl(_url)) {
+                            const erMsg = SnackBar(
+                              content: Text('Error Launching URL!'),
+                              backgroundColor: Colors.red,
+                              padding: EdgeInsets.all(20),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(erMsg);
+                          }
+                        },
+                        child: Container(
+                          child: Chip(
+                            avatar: Icon(Icons.link_outlined),
+                            elevation: 10,
+                            label: Text(
+                              extractDomain(widget.links[index].trim()),
+                              style: TextStyle(color: Colors.blue),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-// ======== tags ======= //
-            const SizedBox(height: 16.0),
-            const Text(
-              'Tags:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 16,),
-            ElevatedButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  String title = '';
-                  String issue = '';
-                  return SingleChildScrollView(
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Title',
-                            ),
-                            onChanged: (value) {
-                              title = value;
-                            },
-                          ),
-                          SizedBox(height: 16.0),
-                          TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Issue',
-                            ),
-                            onChanged: (value) {
-                              issue = value;
-                            },
-                          ),
-                          SizedBox(height: 16.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (title.isNotEmpty && issue.isNotEmpty) {
-                                setState(() {
-                                  reportList.add(Report(title: title, issue: issue));
-                                });
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text('SUBMIT'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+      // ======== tags ======= //
+              
+              
+      
+              const SizedBox(height: 16.0),
+              const Text(
+                'Tags:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8.0),
+              Wrap(
+                spacing: 15.0,
+                children: (widget.tags.split(';'))
+                    .map((tag) => Chip(label: Text(tag.trim()), elevation: 10,), )
+                    .toList(),
+              ),
+              
+              
+          
+            ],
+          ),
+        ),
+        Positioned(child: Center(
+          child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Chip(
+                          avatar: const Icon(Icons.remove_red_eye_outlined),
+                  elevation: 10,
+                  label: Text('10 views'),
+                        ),
+                ),
+                      SizedBox(height: 10,),
+          
+          GestureDetector(
+          onTap: () {
+            if(reportList.length!=0)
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+          return ListView.builder(
+            itemCount: reportList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                title: Text(reportList[index].title),
+                subtitle: Text(reportList[index].issue),
+                trailing: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    // delete report
+                    setState(() {
+                      reportList.removeAt(index);
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
               );
             },
-            child: Text('Report an issue or suggestion'),
-          ),
-
-            
-            const SizedBox(height: 8.0),
-            Wrap(
-              spacing: 15.0,
-              children: (widget.tags.split(';'))
-                  .map((tag) => Chip(label: Text(tag.trim()), elevation: 10,), )
-                  .toList(),
-            ),
-            const SizedBox(height: 16.0),
-            Wrap(spacing: 20.0,children: [
-              Chip(
-          avatar: const Icon(Icons.remove_red_eye_outlined),
-              
-              label: Text('10 views'),
-        ),
-        
-        GestureDetector(
-  onTap: () {
-    if(reportList.length!=0)
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return ListView.builder(
-          itemCount: reportList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              title: Text(reportList[index].title),
-              subtitle: Text(reportList[index].issue),
-              trailing: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  // delete report
-                  setState(() {
-                    reportList.removeAt(index);
-                  });
-                  Navigator.pop(context);
-                },
-              ),
+          );
+              },
             );
           },
-        );
-      },
-    );
-  },
-  child: Chip(
-    avatar: const Icon(Icons.flag_outlined),
-    label: Text('${reportList.length} reports'),
-  ),
-)
-,
-            ],direction: Axis.horizontal,)
+          child: Chip(
+            elevation: 10,
+            avatar: const Icon(Icons.flag_outlined),
+            label: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('${reportList.length} reports'),
+            ),
+          ),
+        )
+        ,
+              ]),
+        ), top: 10,right: 10,)
+        ],
         
-          ],
-        ),
       ),
     );
   }
