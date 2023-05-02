@@ -321,7 +321,9 @@ List<Report> reportList = [
           ),
         ),
         Positioned(child: Center(
-          child:  show ? Card(elevation: 10 ,child: Icon(Icons.settings, color: Colors.black,)) : Card(
+          child:  !show ? Card(elevation: 10 ,child: GestureDetector(onTap: (){setState(() {
+            show = true;
+          });} ,child: Icon(Icons.settings, color: Colors.black,))) : Card(
             color: Colors.white,
             elevation: 15,
             child: Padding(
