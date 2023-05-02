@@ -320,12 +320,12 @@ List<Report> reportList = [
           ),
         ),
         Positioned(child: Center(
-          child: ClipRRect(
-            clipBehavior: Clip.antiAlias,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.black,),
+          child: Card(
+
+            color: Colors.black,
+            elevation: 10,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
               child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
                 Text("Information for Admins", style: TextStyle(color: Colors.white),),
                 SizedBox(height: 10,),
