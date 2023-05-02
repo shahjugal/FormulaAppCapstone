@@ -320,56 +320,65 @@ List<Report> reportList = [
           ),
         ),
         Positioned(child: Center(
-          child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Chip(
-                          avatar: const Icon(Icons.remove_red_eye_outlined),
-                  elevation: 10,
-                  label: Text('10 views'),
-                        ),
-                ),
-                      SizedBox(height: 10,),
-          
-          GestureDetector(
-          onTap: () {
-            if(reportList.length!=0)
-            showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-          return ListView.builder(
-            itemCount: reportList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(reportList[index].title),
-                subtitle: Text(reportList[index].issue),
-                trailing: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    // delete report
-                    setState(() {
-                      reportList.removeAt(index);
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
+          child: ClipRRect(
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: Container(
+              decoration: BoxDecoration(color: Colors.black.withAlpha(100),backgroundBlendMode: BlendMode.overlay),
+              child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
+                Text("Information for Admins", style: TextStyle(color: Colors.white),),
+                SizedBox(height: 10,),
+                    Chip(
+                            avatar: const Icon(Icons.remove_red_eye_outlined),
+                    elevation: 10,
+                    label: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text('10 views'),
+                    ),
+                          ),
+                          SizedBox(height: 10,),
+              
+              GestureDetector(
+              onTap: () {
+                if(reportList.length!=0)
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+              return ListView.builder(
+                itemCount: reportList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(reportList[index].title),
+                    subtitle: Text(reportList[index].issue),
+                    trailing: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        // delete report
+                        setState(() {
+                          reportList.removeAt(index);
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                },
               );
-            },
-          );
+                  },
+                );
               },
-            );
-          },
-          child: Chip(
-            elevation: 10,
-            avatar: const Icon(Icons.flag_outlined),
-            label: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('${reportList.length} reports'),
+              child: Chip(
+                elevation: 10,
+                avatar: const Icon(Icons.flag_outlined),
+                label: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${reportList.length} reports'),
+                ),
+              ),
+                    )
+                    ,
+                  ]),
             ),
           ),
-        )
-        ,
-              ]),
         ), top: 10,right: 10,)
         ],
         
