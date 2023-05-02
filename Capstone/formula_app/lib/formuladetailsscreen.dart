@@ -320,16 +320,22 @@ List<Report> reportList = [
             ],
           ),
         ),
-        Positioned(child: Center(
-          child:  !show ? ElevatedButton(onPressed: (){setState(() {
-            show = !show;
-          });}, child: Icon(Icons.settings)) : Card(
+        Positioned(child: !show ? ElevatedButton(onPressed: (){setState(() {
+            show = true;
+          });}, child: Icon(Icons.info_outline)) : Center(
+          child:  Card(
             color: Colors.white,
             elevation: 15,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
-                Row(children: [Spacer(), ElevatedButton(child: Icon(Icons.close), onPressed: (){setState(){show = false;}})],),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start ,children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(  onPressed: (){setState(() {
+                            show = false;
+                          });}, child: Icon(Icons.close, color: Colors.black,)),
+                ),
                 SizedBox(height: 15),
                 Text("Information for Admins", style: TextStyle(color: Colors.black),),
                 SizedBox(height: 10,),
