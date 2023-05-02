@@ -324,7 +324,8 @@ List<Report> reportList = [
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.all(Radius.circular(10)),
             child: Container(
-              decoration: BoxDecoration(color: Colors.black.withAlpha(100),),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.black,),
               child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
                 Text("Information for Admins", style: TextStyle(color: Colors.white),),
                 SizedBox(height: 10,),
