@@ -324,7 +324,7 @@ List<Report> reportList = [
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.all(Radius.circular(10)),
             child: Container(
-              decoration: BoxDecoration(color: Colors.black.withAlpha(100),backgroundBlendMode: BlendMode.overlay),
+              decoration: BoxDecoration(color: Colors.black.withAlpha(100),),
               child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
                 Text("Information for Admins", style: TextStyle(color: Colors.white),),
                 SizedBox(height: 10,),
@@ -376,7 +376,7 @@ List<Report> reportList = [
               ),
                     )
                     ,
-                  ]),
+                  SizedBox(height:10),]),
             ),
           ),
         ), top: 10,right: 10,)
