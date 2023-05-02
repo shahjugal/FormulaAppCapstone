@@ -47,6 +47,7 @@ class FormulaDetailsScreen extends StatefulWidget {
 class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
   final _bookmarkBox = Hive.box('bookmark_box');
 
+  var show = true;
   Future _createBookmark(Map<String, dynamic> newBookmark) async {
     // final data = _bookmarkBox.values.contains(widget.name);
 
@@ -320,14 +321,15 @@ List<Report> reportList = [
           ),
         ),
         Positioned(child: Center(
-          child: Card(
-
-            color: Colors.black,
-            elevation: 10,
+          child:  show ? Card(elevation: 10 ,child: Icon(Icons.settings, color: Colors.black,)) : Card(
+            color: Colors.white,
+            elevation: 15,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(mainAxisAlignment: MainAxisAlignment.start ,children: [
-                Text("Information for Admins", style: TextStyle(color: Colors.white),),
+                Row(children: [Spacer(), ElevatedButton(child: Icon(Icons.close), onPressed: (){setState(){show = false;}})],),
+                SizedBox(height: 15),
+                Text("Information for Admins", style: TextStyle(color: Colors.black),),
                 SizedBox(height: 10,),
                     Chip(
                             avatar: const Icon(Icons.remove_red_eye_outlined),
@@ -337,7 +339,7 @@ List<Report> reportList = [
                       child: Text('10 views'),
                     ),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 15,),
               
               GestureDetector(
               onTap: () {
