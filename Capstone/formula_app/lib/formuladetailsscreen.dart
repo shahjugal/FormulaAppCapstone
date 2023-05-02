@@ -242,6 +242,24 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                   .map((tag) => Chip(label: Text(tag.trim())))
                   .toList(),
             ),
+            const SizedBox(height: 16.0),
+        Row(
+          children: [
+            const Icon(Icons.remove_red_eye_outlined),
+            const SizedBox(width: 8.0),
+            Text('10 views'),
+          ],
+        ),
+        
+        // ======== Reports ========= //
+        const SizedBox(height: 8.0),
+        Row(
+          children: [
+            const Icon(Icons.flag_outlined),
+            const SizedBox(width: 8.0),
+            Text('10 reports'),
+          ],
+        ),
           ],
         ),
       ),
