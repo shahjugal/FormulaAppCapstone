@@ -23,7 +23,7 @@ class NetworkImageWidget extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text("Backend URL Issue: Contact jinli")
+                    Text("Backend URL Issue")
                   ],
                 ));
               },

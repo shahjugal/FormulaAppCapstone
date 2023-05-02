@@ -7,6 +7,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'NetworkImageWidget.dart';
 
+class Report {
+  String title;
+  String issue;
+  
+  Report({required this.title, required this.issue});
+}
+
 class FormulaDetailsScreen extends StatefulWidget {
   final String name;
   final String description;
@@ -60,6 +67,13 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
       return domain;
     }
   }
+
+List<Report> reportList = [
+  Report(title: 'Report 1', issue: 'Issue 1'),
+  Report(title: 'Report 2', issue: 'Issue 2'),
+  Report(title: 'Report 3', issue: 'Issue 3'),
+];
+
 
   @override
   Widget build(BuildContext context) {
@@ -228,38 +242,117 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                 },
               ),
             ),
-
-            // ======== tags ======= //
+// ======== tags ======= //
             const SizedBox(height: 16.0),
             const Text(
               'Tags:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 16,),
+            ElevatedButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  String title = '';
+                  String issue = '';
+                  return SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Title',
+                            ),
+                            onChanged: (value) {
+                              title = value;
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Issue',
+                            ),
+                            onChanged: (value) {
+                              issue = value;
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (title.isNotEmpty && issue.isNotEmpty) {
+                                setState(() {
+                                  reportList.add(Report(title: title, issue: issue));
+                                });
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text('SUBMIT'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Text('Report an issue or suggestion'),
+          ),
+
+            
             const SizedBox(height: 8.0),
             Wrap(
-              spacing: 8.0,
+              spacing: 15.0,
               children: (widget.tags.split(';'))
-                  .map((tag) => Chip(label: Text(tag.trim())))
+                  .map((tag) => Chip(label: Text(tag.trim()), elevation: 10,), )
                   .toList(),
             ),
             const SizedBox(height: 16.0),
-        Row(
-          children: [
-            const Icon(Icons.remove_red_eye_outlined),
-            const SizedBox(width: 8.0),
-            Text('10 views'),
-          ],
+            Wrap(spacing: 20.0,children: [
+              Chip(
+          avatar: const Icon(Icons.remove_red_eye_outlined),
+              
+              label: Text('10 views'),
         ),
         
-        // ======== Reports ========= //
-        const SizedBox(height: 8.0),
-        Row(
-          children: [
-            const Icon(Icons.flag_outlined),
-            const SizedBox(width: 8.0),
-            Text('10 reports'),
-          ],
-        ),
+        GestureDetector(
+  onTap: () {
+    if(reportList.length!=0)
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ListView.builder(
+          itemCount: reportList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text(reportList[index].title),
+              subtitle: Text(reportList[index].issue),
+              trailing: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  // delete report
+                  setState(() {
+                    reportList.removeAt(index);
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
+  },
+  child: Chip(
+    avatar: const Icon(Icons.flag_outlined),
+    label: Text('${reportList.length} reports'),
+  ),
+)
+,
+            ],direction: Axis.horizontal,)
+        
           ],
         ),
       ),
