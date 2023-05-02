@@ -330,12 +330,9 @@ List<Report> reportList = [
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start ,children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(  onPressed: (){setState(() {
-                            show = false;
-                          });}, child: Icon(Icons.close, color: Colors.black,)),
-                ),
+                ElevatedButton(  onPressed: (){setState(() {
+                          show = false;
+                        });}, child: Icon(Icons.close,)),
                 SizedBox(height: 15),
                 Text("Information for Admins", style: TextStyle(color: Colors.black),),
                 SizedBox(height: 10,),
