@@ -22,7 +22,7 @@ class _TabSelectorUIState extends State<TabSelectorUI>
   List<Widget> _buildScreens() {
     return [
       SchoolUI(),
-      SearchTags(),
+      const SearchTags(),
       BookmarkList(),
       SettingsUI(),
     ];
@@ -46,7 +46,7 @@ class _TabSelectorUIState extends State<TabSelectorUI>
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.settings_outlined),
+        icon: Icon(Icons.info_sharp),
         activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: Colors.grey,
       ),

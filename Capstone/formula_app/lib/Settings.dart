@@ -4,25 +4,91 @@ class SettingsUI extends StatefulWidget {
   const SettingsUI({super.key});
 
   @override
-  State<SettingsUI> createState() => _SettingsUIState();
+  _SettingsUIState createState() => _SettingsUIState();
 }
 
 class _SettingsUIState extends State<SettingsUI> {
+  bool _sortAscending = true;
+  int _sortColumnIndex = 1;
+
+  final List<Map<String, dynamic>> _data = [    {      'name': 'energy eq',      'views': 50,      'reports': 2,    },    {      'name': 'mass eqn',      'views': 20,      'reports': 1,    },    {      'name': 'Mole law',      'views': 100,      'reports': 4,    },    {      'name': 'Work Energy threom',      'views': 30,      'reports': 3,    },  ];
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text('Formula details.'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text("No Updates Available at the momnent!"),
-            SizedBox(height: 10),
-            Text("Current Version " + "0.0.1(Alpha Stage)")
-          ],
-        ),
+      body: Column(
+        
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(25),
+            child: Row(
+              children: [
+                const Text('Sort in (manner): '),
+                 DropdownButton<bool>(
+                  value: _sortAscending,
+                  onChanged: (value) {
+                    // Joileje tari rite. firebase me je query apvani hoy e. 
+                    // Downloading all formula and sorting on local device is not feasible.
+                  },
+                   items: const [
+                     DropdownMenuItem<bool>(
+                      value: true,
+                      child:  Text('Ascending'),
+                    ),
+                     DropdownMenuItem<bool>(
+                      value: false,
+                      child:  Text('Descending'),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                const Text('Sort by: '),
+                 DropdownButton<int>(
+                  value: _sortColumnIndex,
+                  onChanged: (value) {
+                    // Joileje tari rite. firebase me je query apvani hoy e. 
+                    // Downloading all formula and sorting on local device is not feasible.
+                  },
+                   items: const [
+                     DropdownMenuItem<int>(
+                      value: 1,
+                      child:  Text('Views'),
+                    ),
+                     DropdownMenuItem<int>(
+                      value: 2,
+                      child:  Text('Reports'),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 3,
+                      child:  Text('Name'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          
+          Expanded(
+            child: ListView.builder(
+              itemCount: _data.length,
+              itemBuilder: (context, index) {
+                final item = _data[index];
+                return ListTile(
+                  onTap: (){
+                    // Aiya formula page par push karvanu hoyto joileje na jarur hoyto khali rekjhe. ur choice.
+                  },
+                  title: Text(item['name']),
+                  subtitle: Text('Views: ${item['views']} Reports: ${item['reports']}'),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
