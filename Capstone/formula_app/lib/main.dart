@@ -1,26 +1,35 @@
 import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'ImageScreen.dart';
 import 'TabBarUI.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:http/http.dart' as http;
 
-bool isConnected = false;
 
-Future<void> checkInternetConnection() async {
-  var connectivityResult = await (Connectivity().checkConnectivity());
-  if (connectivityResult == ConnectivityResult.none) {
-    print("Network Error!");
-    exit(0);
+
+late Box box;
+
+
+
+Future<bool> checkInternetConnectivity() async {
+  try {
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
+    return response.statusCode == 200;
+  } catch (e) {
+    return false;
   }
 }
 
-late Box box;
+
 void main() async {
-  checkInternetConnection();
+
+  
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -29,7 +38,33 @@ void main() async {
 
   await Hive.openBox('bookmark_box');
 
-  runApp(MyApp());
+  bool connected = await checkInternetConnectivity();
+
+  if(!connected) runApp(NetErrorScreen());
+  else runApp(MyApp());
+}
+
+  class NetErrorScreen extends StatelessWidget {
+  const NetErrorScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: const Center(child: Column(
+      children: [
+        SizedBox(height: 50,),
+        Icon(CupertinoIcons.antenna_radiowaves_left_right, color: Colors.red, size: 200,),
+        SizedBox(height: 10,),
+        Text("Network Error", style: TextStyle(fontSize: 20, color: Colors.red)),
+        SizedBox(height: 10,),
+        Text("Check your internet and relaunch app", style: TextStyle(fontSize: 10, color: Colors.red)),
+        SizedBox(height: 50,),
+        Text("If Issue persists contact us.", style: TextStyle(fontSize: 10, color: Colors.red)),
+        
+      ],
+    ),
+    ));
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -45,11 +80,11 @@ class MyApp extends StatelessWidget {
       title: 'AU Formula eBook',
       theme: ThemeData(
         // Define the default brightness and colors.
-        primaryColor: Color.fromRGBO(128, 18, 20, 1),
+        primaryColor: const Color.fromRGBO(128, 18, 20, 1),
       ),
       home: ImageScreen(
         imageUrl:
-            'https://images.edexlive.com/uploads/user/imagelibrary/2019/1/21/original/AU.jpg',
+            'https://ahduni.edu.in/site/assets/files/1/default_logo_final_png.png',
         // 'https://www.theplan.it/cdn-cgi/image/fit=contain,width=830/images/409.jpg',
       ),
       routes: {

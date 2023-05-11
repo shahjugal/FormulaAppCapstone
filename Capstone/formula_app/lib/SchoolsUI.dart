@@ -82,6 +82,11 @@ class _SchoolUIState extends State<SchoolUI> {
                 child: CircularProgressIndicator(),
               );
             default:
+            if(snapshot.hasError){
+              return  Center(
+                    child: Text(snapshot.error.toString()),
+                  );
+            }
               if (snapshot.hasData) {
                 //print(snapshot.data!.docs.length);
                 if (snapshot.data!.docs.isEmpty) {
@@ -138,7 +143,7 @@ class _SchoolUIState extends State<SchoolUI> {
                                               TextButton(
                                                 onPressed: () =>
                                                     Navigator.of(context).pop(),
-                                                child: const Text('cancle'),
+                                                child: const Text('CANCEL'),
                                               ),
                                               ElevatedButton(
                                                 onPressed: () {
@@ -147,7 +152,7 @@ class _SchoolUIState extends State<SchoolUI> {
                                                       .delete();
                                                   Navigator.of(context).pop();
                                                 },
-                                                child: const Text('Delete'),
+                                                child: const Text('DELETE'),
                                               )
                                             ],
                                           ),

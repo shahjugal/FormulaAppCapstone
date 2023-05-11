@@ -33,78 +33,54 @@ class _ImageScreenState extends State<ImageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height,
-            child: Image.network(
-              widget.imageUrl,
-              fit: BoxFit.cover,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                        : null,
-                    color: Colors.white,
-                  ),
-                );
-              },
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return Center(
-                  child: Icon(Icons.error, color: Colors.white),
-                );
-              },
-            ),
+            child: Image(image: AssetImage('assets/au_logo.png'),),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 4,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Formula App",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(
-                      "Every formula on your finger tips!",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Container(
+          //     height: MediaQuery.of(context).size.height / 4,
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+          //         begin: Alignment.bottomCenter,
+          //         end: Alignment.topCenter,
+          //       ),
+          //     ),
+          //     child: Padding(
+          //       padding: EdgeInsets.all(16.0),
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.end,
+          //         children: [
+          //           Text(
+          //             "Formula App",
+          //             style: TextStyle(
+          //               color: Colors.black,
+          //               fontSize: 32,
+          //               fontWeight: FontWeight.bold,
+          //             ),
+          //           ),
+          //           SizedBox(height: 16.0),
+          //           Text(
+          //             "Every formula on your finger tips!",
+          //             style: TextStyle(
+          //               color: Colors.black.withOpacity(0.8),
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.w500,
+          //             ),
+          //             textAlign: TextAlign.center,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
