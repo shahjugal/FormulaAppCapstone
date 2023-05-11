@@ -90,7 +90,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return const Center(
-                child: Text('please wait'),
+                child: CircularProgressIndicator(),
               );
             default:
               if (snapshot.hasData) {

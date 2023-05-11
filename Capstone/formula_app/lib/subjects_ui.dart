@@ -96,7 +96,7 @@ class _SubjectsUIState extends State<SubjectsUI> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return const Center(
-                child: Text('please wait'),
+                child: CircularProgressIndicator(),
               );
             default:
               if (snapshot.hasData) {

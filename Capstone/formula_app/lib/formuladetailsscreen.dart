@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:formula_app/FormulaListUI.dart';
 import 'package:formula_app/bookmark_list.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,7 +26,7 @@ class FormulaDetailsScreen extends StatefulWidget {
 
   final String tags;
 
-  FormulaDetailsScreen({
+  const FormulaDetailsScreen({super.key, 
     required this.name,
     required this.description,
     // required this.formula,
@@ -47,7 +46,7 @@ class FormulaDetailsScreen extends StatefulWidget {
 class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
   final _bookmarkBox = Hive.box('bookmark_box');
 
-  var show = true;
+  var show = false;
   Future _createBookmark(Map<String, dynamic> newBookmark) async {
     // final data = _bookmarkBox.values.contains(widget.name);
 

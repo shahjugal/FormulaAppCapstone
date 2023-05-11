@@ -60,7 +60,7 @@ class _SearchTagsState extends State<SearchTags> {
                     } else {
                       return enteredText == null || enteredText == ""
                           ? Center(
-                              child: Text('Not data'),
+                              child: Text('Enter something to search for...'),
                             )
                           : ListView(
                               children: [
@@ -157,7 +157,12 @@ class _SearchTagsState extends State<SearchTags> {
                                       ),
                                     );
                                   },
-                                )
+                                ),
+                              Center(child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("End of search results."),
+                              )),
+                              SizedBox(height: 20,),
                               ],
                             );
                     }

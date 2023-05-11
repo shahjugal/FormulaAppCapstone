@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -70,7 +70,8 @@ class _BookmarkListState extends State<BookmarkList> {
         title: const Text('Bookmarks'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: ListView.builder(
+      body: (_items.length == 0) ? const Center(child: Text("No formula bookmarked.")) :
+      ListView.builder(
         itemCount: _items.length,
         itemBuilder: (_, index) {
           final currentItem = _items[index];
@@ -100,12 +101,12 @@ class _BookmarkListState extends State<BookmarkList> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Delete'),
+                        title: const Text('DELETE'),
                         content: const Text('Are you sure you want to delete?'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('cancle'),
+                            child: const Text('CANCEL'),
                           ),
                           ElevatedButton(
                             onPressed: () {

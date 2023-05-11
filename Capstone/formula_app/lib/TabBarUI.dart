@@ -24,7 +24,7 @@ class _TabSelectorUIState extends State<TabSelectorUI>
       SchoolUI(),
       const SearchTags(),
       BookmarkList(),
-      SettingsUI(),
+      const SettingsUI(),
     ];
   }
 

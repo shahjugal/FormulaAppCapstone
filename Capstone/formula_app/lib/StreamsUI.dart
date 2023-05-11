@@ -93,7 +93,7 @@ class _StreamsUIState extends State<StreamsUI> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return const Center(
-                child: Text('please wait'),
+                child: CircularProgressIndicator(),
               );
             default:
               if (snapshot.hasData) {
@@ -181,23 +181,18 @@ class _StreamsUIState extends State<StreamsUI> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 10,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      data['name'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        letterSpacing: 1.2,
-                                      ),
-                                      textAlign: TextAlign.center,
+                                  padding: const EdgeInsets.all(10),
+                                  child: Text(
+                                    data['name'],
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      letterSpacing: 1.2,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ],

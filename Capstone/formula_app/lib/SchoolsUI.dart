@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:formula_app/StreamsUI.dart';
@@ -78,7 +79,7 @@ class _SchoolUIState extends State<SchoolUI> {
             case ConnectionState.none:
             case ConnectionState.waiting:
               return const Center(
-                child: Text('please wait'),
+                child: CircularProgressIndicator(),
               );
             default:
               if (snapshot.hasData) {
@@ -158,30 +159,25 @@ class _SchoolUIState extends State<SchoolUI> {
                                 Expanded(
                                   child: Center(
                                     child: Icon(
-                                      Icons.school,
+                                      CupertinoIcons.building_2_fill,
                                       size: 50.0,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 10,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      data['name'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        letterSpacing: 1.2,
-                                      ),
-                                      textAlign: TextAlign.center,
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    data['name'],
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      letterSpacing: 1.2,
                                     ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ],

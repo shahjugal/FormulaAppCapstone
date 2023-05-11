@@ -13,7 +13,6 @@ bool isConnected = false;
 Future<void> checkInternetConnection() async {
   var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.none) {
-    await Future.delayed(Duration(seconds: 2));
     print("Network Error!");
     exit(0);
   }
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Formula App',
+      title: 'AU Formula eBook',
       theme: ThemeData(
         // Define the default brightness and colors.
         primaryColor: Color.fromRGBO(128, 18, 20, 1),
