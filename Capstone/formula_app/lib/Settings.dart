@@ -36,6 +36,9 @@ class _SettingsUIState extends State<SettingsUI> {
                   onChanged: (value) {
                     // Joileje tari rite. firebase me je query apvani hoy e. 
                     // Downloading all formula and sorting on local device is not feasible.
+                    setState(() {
+                      _sortAscending = value!;
+                    });
                   },
                    items: const [
                      DropdownMenuItem<bool>(
@@ -55,6 +58,9 @@ class _SettingsUIState extends State<SettingsUI> {
                   onChanged: (value) {
                     // Joileje tari rite. firebase me je query apvani hoy e. 
                     // Downloading all formula and sorting on local device is not feasible.
+                    setState(() {
+                      _sortColumnIndex = value!;
+                    });
                   },
                    items: const [
                      DropdownMenuItem<int>(
