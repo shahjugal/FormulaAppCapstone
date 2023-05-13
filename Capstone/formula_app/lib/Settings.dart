@@ -8,8 +8,8 @@ class SettingsUI extends StatefulWidget {
 }
 
 class _SettingsUIState extends State<SettingsUI> {
-  bool _sortAscending = true;
-  int _sortColumnIndex = 1;
+  bool _sortAscending = false;
+  int _sortColumnIndex = 2;
 
   final List<Map<String, dynamic>> _data = [    {      'name': 'energy eq',      'views': 50,      'reports': 2,    },    {      'name': 'mass eqn',      'views': 20,      'reports': 1,    },    {      'name': 'Mole law',      'views': 100,      'reports': 4,    },    {      'name': 'Work Energy threom',      'views': 30,      'reports': 3,    },  ];
 
@@ -33,6 +33,7 @@ class _SettingsUIState extends State<SettingsUI> {
                 const Text('Sort in (manner): '),
                  DropdownButton<bool>(
                   value: _sortAscending,
+                  
                   onChanged: (value) {
                     // Joileje tari rite. firebase me je query apvani hoy e. 
                     // Downloading all formula and sorting on local device is not feasible.
@@ -40,7 +41,7 @@ class _SettingsUIState extends State<SettingsUI> {
                       _sortAscending = value!;
                     });
                   },
-                   items: const [
+                   items:  [
                      DropdownMenuItem<bool>(
                       value: true,
                       child:  Text('Ascending'),
@@ -51,7 +52,7 @@ class _SettingsUIState extends State<SettingsUI> {
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 const Text('Sort by: '),
                  DropdownButton<int>(
                   value: _sortColumnIndex,
@@ -62,7 +63,7 @@ class _SettingsUIState extends State<SettingsUI> {
                       _sortColumnIndex = value!;
                     });
                   },
-                   items: const [
+                   items:  [
                      DropdownMenuItem<int>(
                       value: 1,
                       child:  Text('Views'),
