@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:formula_app/bookmark_list.dart';
 
@@ -25,16 +24,9 @@ class FormulaDetailsScreen extends StatefulWidget {
   final String parameterurl;
   final String physical;
 
-    final String schoolDocId;
-  final String majorDocId;
-  final String courseDocId;
-  final String docId;
-
   final String tags;
 
    int? views = 0;
-
-
 
    FormulaDetailsScreen({super.key, 
     required this.name,
@@ -48,10 +40,6 @@ class FormulaDetailsScreen extends StatefulWidget {
     required this.parameterurl,
     required this.physical,
     this.views,
-    required this.courseDocId,
-    required this.majorDocId,
-    required this.schoolDocId,
-    required this.docId,
   });
 
   @override
@@ -71,20 +59,6 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
     await _bookmarkBox.add(newBookmark);
     //  _refreshBookmark();
   }
-      Future<void> updateFormulaViews(String formulaId) async {
-  final formulaRef = FirebaseFirestore.instance
-      .collection('FormulaApp')
-        .doc(widget.schoolDocId)
-        .collection('majors')
-        .doc(widget.majorDocId)
-        .collection('courses')
-        .doc(widget.courseDocId)
-        .collection('formula')
-        .doc(formulaId);
-
-  // Increment the "Views" field
-  await formulaRef.update({'views': FieldValue.increment(1)});
-}
 
   String extractDomain(String url) {
     final uri = Uri.parse(url);
@@ -102,12 +76,6 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
     Report(title: 'Report 2', issue: 'Issue 2'),
     Report(title: 'Report 3', issue: 'Issue 3'),
   ];
-
-  @override
-  void initState() async {
-    super.initState();
-    await updateFormulaViews(widget.docId);
-  }
 
   @override
   Widget build(BuildContext context) {

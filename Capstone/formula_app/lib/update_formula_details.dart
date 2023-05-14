@@ -17,6 +17,7 @@ class UpdateFormulaDetails extends StatefulWidget {
   final String schoolDocId;
   final String majorDocId;
   final String courseDocId;
+  final String courseName;
   final String docId;
 
   final String tags;
@@ -32,6 +33,7 @@ class UpdateFormulaDetails extends StatefulWidget {
     required this.courseDocId,
     required this.majorDocId,
     required this.schoolDocId,
+    required this.courseName,
     required this.docId,
   });
 

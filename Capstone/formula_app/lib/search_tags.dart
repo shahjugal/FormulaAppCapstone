@@ -90,8 +90,6 @@ class _SearchTagsState extends State<SearchTags> {
                                         data.get('applications');
                                     final String searchLinks =
                                         data.get('links');
-
-                                    final str = snapshot.data!;
                                     return Container(
                                       margin: EdgeInsets.all(8),
                                       child: Material(
@@ -147,11 +145,6 @@ class _SearchTagsState extends State<SearchTags> {
                                                   // relatedCourses:
                                                   //     searchRelatedcourses,
                                                   tags: searchTags,
-                                                  courseDocId: "HYvjjGWeLXKzUrJisMYT",
-                                                  majorDocId: "gtMP01Vl23fQlT4Sazgf",
-                                                  schoolDocId: "Lk1kGlYJCQ4xlpoL1Nxe",
-                                                  docId: "1ylPbYtcdK53wdF9PsqL",
-                                                  views: data.get("views"),
                                                 ),
                                               ),
                                             );
