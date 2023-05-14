@@ -26,9 +26,7 @@ class FormulaDetailsScreen extends StatefulWidget {
 
   final String tags;
 
-   int? views = 0;
-
-   FormulaDetailsScreen({super.key, 
+  const FormulaDetailsScreen({super.key, 
     required this.name,
     required this.description,
     // required this.formula,
@@ -39,7 +37,6 @@ class FormulaDetailsScreen extends StatefulWidget {
     required this.formulaurl,
     required this.parameterurl,
     required this.physical,
-    this.views,
   });
 
   @override
@@ -367,7 +364,7 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                                 elevation: 10,
                                 label: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(widget.views.toString() + 'views'),
+                                  child: Text('10 views'),
                                 ),
                               ),
                               SizedBox(

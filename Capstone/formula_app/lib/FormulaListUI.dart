@@ -37,21 +37,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
     super.dispose();
   }
 
-  Future<void> updateFormulaViews(String formulaId) async {
-  final formulaRef = FirebaseFirestore.instance
-      .collection('FormulaApp')
-        .doc(widget.schoolDocId)
-        .collection('majors')
-        .doc(widget.majorDocId)
-        .collection('courses')
-        .doc(widget.courseDocId)
-        .collection('formula')
-        .doc(formulaId);
-
-  // Increment the "Views" field
-  await formulaRef.update({'views': FieldValue.increment(1)});
-}
-
   @override
   Widget build(BuildContext context) {
     var stream = FirebaseFirestore.instance
@@ -139,7 +124,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
                                         name: data['name'],
                                         tags: data['tags'],
                                         links: data['links'],
-                                        
                                         courseDocId: widget.courseDocId,
                                         courseName: widget.courseName,
                                         majorDocId: widget.majorDocId,
@@ -182,8 +166,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
                               ),
                             ],
                           ),
-                          onTap: () async {
-                            await updateFormulaViews(document.id);
+                          onTap: () {
                             // print("formula === ${data['relatedcourses']}");
                             Navigator.push(
                               context,
@@ -197,7 +180,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
                                   name: data['name'],
                                   tags: data['tags'],
                                   links: data['links'].split(';'),
-                                  views: data['views'] != null ?  data['views'] : 0 ,
                                   // relatedCourses: data['relatedcourses'],
                                 ),
                               ),

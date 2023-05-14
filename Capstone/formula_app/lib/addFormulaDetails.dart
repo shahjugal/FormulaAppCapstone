@@ -345,7 +345,6 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                         'physical': physicalSignificance.text,
                         'formulaurl': formulaImageUrl,
                         'parameterurl': parametersImageUrl,
-                        'views':1,
                         // 'formula': formulaController.text,
                       });
 
