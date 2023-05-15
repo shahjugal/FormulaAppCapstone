@@ -90,8 +90,25 @@ class _SearchTagsState extends State<SearchTags> {
                                         data.get('applications');
                                     final String searchLinks =
                                         data.get('links');
+                                    final String searchDocId =
+                                        data.reference.id;
+                                    final String searchCourseId =
+                                        data.reference.parent.parent!.id;
+                                    final String searchMajorId = data.reference
+                                        .parent.parent!.parent.parent!.id;
+                                    final String searchSchoolId = data
+                                        .reference
+                                        .parent
+                                        .parent!
+                                        .parent
+                                        .parent!
+                                        .parent
+                                        .parent!
+                                        .id;
 
-                                    final str = snapshot.data!;
+                                    print(
+                                        "docId search ======= ${searchSchoolId}");
+
                                     return Container(
                                       margin: EdgeInsets.all(8),
                                       child: Material(
@@ -147,11 +164,10 @@ class _SearchTagsState extends State<SearchTags> {
                                                   // relatedCourses:
                                                   //     searchRelatedcourses,
                                                   tags: searchTags,
-                                                  courseDocId: "HYvjjGWeLXKzUrJisMYT",
-                                                  majorDocId: "gtMP01Vl23fQlT4Sazgf",
-                                                  schoolDocId: "Lk1kGlYJCQ4xlpoL1Nxe",
-                                                  docId: "1ylPbYtcdK53wdF9PsqL",
-                                                  views: data.get("views"),
+                                                  courseDocId: searchCourseId,
+                                                  docId: searchDocId,
+                                                  majorDocId: searchMajorId,
+                                                  schoolDocId: searchSchoolId,
                                                 ),
                                               ),
                                             );
@@ -165,11 +181,14 @@ class _SearchTagsState extends State<SearchTags> {
                                     );
                                   },
                                 ),
-                              Center(child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text("End of search results."),
-                              )),
-                              SizedBox(height: 20,),
+                                Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("End of search results."),
+                                )),
+                                SizedBox(
+                                  height: 20,
+                                ),
                               ],
                             );
                     }

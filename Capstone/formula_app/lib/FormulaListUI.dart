@@ -16,7 +16,6 @@ class FormulaListUI extends StatefulWidget {
     required this.majorDocId,
     required this.schoolDocId,
     required this.courseName,
-    
   });
 
   @override
@@ -37,8 +36,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
     // controller.dispose();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +72,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
                 MaterialPageRoute(
                   builder: (context) => AddFormulaDetails(
                     courseDocId: widget.courseDocId,
-                    courseName: widget.courseName,
+                    // courseName: widget.courseName,
                     majorDocId: widget.majorDocId,
                     schoolDocId: widget.schoolDocId,
                   ),
@@ -127,8 +124,8 @@ class _FormulaListUIState extends State<FormulaListUI> {
                                         name: data['name'],
                                         tags: data['tags'],
                                         links: data['links'],
-                                        
                                         courseDocId: widget.courseDocId,
+                                        courseName: widget.courseName,
                                         majorDocId: widget.majorDocId,
                                         schoolDocId: widget.schoolDocId,
                                         docId: document.id,
@@ -175,10 +172,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FormulaDetailsScreen(
-                                  courseDocId: widget.courseDocId,
-                                        majorDocId: widget.majorDocId,
-                                        schoolDocId: widget.schoolDocId,
-                                        docId: document.id,
                                   applications: (data['applications']),
                                   description: data['description'],
                                   physical: data['physical'],
@@ -187,7 +180,12 @@ class _FormulaListUIState extends State<FormulaListUI> {
                                   name: data['name'],
                                   tags: data['tags'],
                                   links: data['links'].split(';'),
-                                  views: data['views'] != null ?  data['views'] : 0 ,
+                                  courseDocId: widget.courseDocId,
+                                  // courseName: widget.courseName,
+                                  majorDocId: widget.majorDocId,
+                                  schoolDocId: widget.schoolDocId,
+                                  docId: document.id,
+
                                   // relatedCourses: data['relatedcourses'],
                                 ),
                               ),

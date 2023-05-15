@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:formula_app/FormulaListUI.dart';
 import 'package:formula_app/bookmark_list.dart';
-
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,37 +17,26 @@ class Report {
 class FormulaDetailsScreen extends StatefulWidget {
   final String name;
   final String description;
-  // final String formula;
   final String applications;
   final List<String> links;
-  // final String relatedCourses;
   final String formulaurl;
   final String parameterurl;
   final String physical;
-
-    final String schoolDocId;
+  final String tags;
+  final String schoolDocId;
   final String majorDocId;
   final String courseDocId;
   final String docId;
 
-  final String tags;
-
-   int? views = 0;
-
-
-
-   FormulaDetailsScreen({super.key, 
+  FormulaDetailsScreen({
     required this.name,
     required this.description,
-    // required this.formula,
     required this.applications,
     required this.links,
-    // required this.relatedCourses,
     required this.tags,
     required this.formulaurl,
     required this.parameterurl,
     required this.physical,
-    this.views,
     required this.courseDocId,
     required this.majorDocId,
     required this.schoolDocId,
@@ -61,30 +50,22 @@ class FormulaDetailsScreen extends StatefulWidget {
 class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
   final _bookmarkBox = Hive.box('bookmark_box');
 
-  var show = false;
+  var show = true;
   Future _createBookmark(Map<String, dynamic> newBookmark) async {
-    // final data = _bookmarkBox.values.contains(widget.name);
-
-    // final gasPlanets = <int, String>{1: 'Jupiter', 2: 'Saturn'};
-
-    // print(" ==== _createBookmark newBookmark === ${newBookmark}");
     await _bookmarkBox.add(newBookmark);
-    //  _refreshBookmark();
   }
-      Future<void> updateFormulaViews(String formulaId) async {
-  final formulaRef = FirebaseFirestore.instance
-      .collection('FormulaApp')
-        .doc(widget.schoolDocId)
-        .collection('majors')
-        .doc(widget.majorDocId)
-        .collection('courses')
-        .doc(widget.courseDocId)
-        .collection('formula')
-        .doc(formulaId);
 
-  // Increment the "Views" field
-  await formulaRef.update({'views': FieldValue.increment(1)});
-}
+  bool _isFirstBuild = true;
+
+  void runCount(CollectionReference<Map<String, dynamic>> stream) {
+    if (_isFirstBuild) {
+      setState(() {
+        stream.doc(widget.docId).update({'count': FieldValue.increment(1)});
+      });
+
+      _isFirstBuild = false;
+    }
+  }
 
   String extractDomain(String url) {
     final uri = Uri.parse(url);
@@ -103,14 +84,42 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
     Report(title: 'Report 3', issue: 'Issue 3'),
   ];
 
+  late TextEditingController reportTitleController;
+  late TextEditingController reportIssueController;
+
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    await updateFormulaViews(widget.docId);
+
+    reportTitleController = TextEditingController();
+    reportIssueController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
+    didChangeDependencies();
+    var stream = FirebaseFirestore.instance
+        .collection('FormulaApp')
+        .doc(widget.schoolDocId)
+        .collection('majors')
+        .doc(widget.majorDocId)
+        .collection('courses')
+        .doc(widget.courseDocId)
+        .collection('formula');
+
+    var reportStream = FirebaseFirestore.instance
+        .collection('FormulaApp')
+        .doc(widget.schoolDocId)
+        .collection('majors')
+        .doc(widget.majorDocId)
+        .collection('courses')
+        .doc(widget.courseDocId)
+        .collection('formula')
+        .doc(widget.docId)
+        .collection('reports');
+
+    runCount(stream);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -126,30 +135,45 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       TextField(
+                        controller: reportTitleController,
                         decoration: InputDecoration(
                           labelText: 'Title',
                         ),
-                        onChanged: (value) {
-                          title = value;
-                        },
                       ),
                       SizedBox(height: 16.0),
                       TextField(
+                        controller: reportIssueController,
                         decoration: InputDecoration(
                           labelText: 'Issue',
                         ),
-                        onChanged: (value) {
-                          issue = value;
-                        },
                       ),
                       SizedBox(height: 16.0),
                       ElevatedButton(
-                        onPressed: () {
-                          if (title.isNotEmpty && issue.isNotEmpty) {
-                            setState(() {
-                              reportList
-                                  .add(Report(title: title, issue: issue));
+                        onPressed: () async {
+                          if (reportIssueController.text.isEmpty ||
+                              reportTitleController.text.isEmpty) {
+                            const erMsg = SnackBar(
+                              content: Text('one or more field is emplty!'),
+                              backgroundColor: Colors.red,
+                              padding: EdgeInsets.all(20),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(erMsg);
+                          } else {
+                            await reportStream.add({
+                              'title': reportTitleController.text,
+                              'issue': reportIssueController.text,
                             });
+
+                            reportIssueController.clear();
+                            reportTitleController.clear();
+
+                            const msg = SnackBar(
+                              content: Text('Report Added'),
+                              backgroundColor: Colors.green,
+                              padding: EdgeInsets.all(20),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(msg);
+
                             Navigator.pop(context);
                           }
                         },
@@ -359,6 +383,8 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
             ),
           ),
           Positioned(
+            top: 10,
+            right: 10,
             child: !show
                 ? ElevatedButton(
                     onPressed: () {
@@ -382,59 +408,146 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                                       show = false;
                                     });
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.close,
                                   )),
-                              SizedBox(height: 15),
-                              Text(
+                              const SizedBox(height: 15),
+                              const Text(
                                 "Information for Admins",
                                 style: TextStyle(color: Colors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Chip(
-                                avatar:
-                                    const Icon(Icons.remove_red_eye_outlined),
+                              const Chip(
+                                avatar: Icon(Icons.remove_red_eye_outlined),
                                 elevation: 10,
                                 label: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(widget.views.toString() + 'views'),
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('10 views'),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  if (reportList.length != 0)
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ListView.builder(
-                                          itemCount: reportList.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return ListTile(
-                                              title:
-                                                  Text(reportList[index].title),
-                                              subtitle:
-                                                  Text(reportList[index].issue),
-                                              trailing: IconButton(
-                                                icon: Icon(Icons.close),
-                                                onPressed: () {
-                                                  // delete report
-                                                  setState(() {
-                                                    reportList.removeAt(index);
-                                                  });
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
+                                  // if (reportList.length != 0)
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return StreamBuilder(
+                                          stream: reportStream.snapshots(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<QuerySnapshot>
+                                                  snapshot) {
+                                            switch (snapshot.connectionState) {
+                                              case ConnectionState.none:
+                                              case ConnectionState.waiting:
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+
+                                              default:
+                                                if (snapshot.hasData) {
+                                                  if (snapshot
+                                                      .data!.docs.isEmpty) {
+                                                    return const Center(
+                                                      child: Text(
+                                                          'no record found'),
+                                                    );
+                                                  } else {
+                                                    return ListView(
+                                                      children: snapshot
+                                                          .data!.docs
+                                                          .map((DocumentSnapshot
+                                                              document) {
+                                                        Map<String, dynamic>
+                                                            data =
+                                                            document.data()
+                                                                as Map<String,
+                                                                    dynamic>;
+                                                        return ListTile(
+                                                          title: Text(
+                                                              data['title']),
+                                                          subtitle: Text(
+                                                              data['issue']),
+                                                          trailing: IconButton(
+                                                              onPressed: () {
+                                                                showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      AlertDialog(
+                                                                    title: const Text(
+                                                                        'Delete'),
+                                                                    content:
+                                                                        const Text(
+                                                                            'Are you sure you want to delete?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.of(context).pop(),
+                                                                        child: const Text(
+                                                                            'cancle'),
+                                                                      ),
+                                                                      ElevatedButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          reportStream
+                                                                              .doc(document.id)
+                                                                              .delete();
+                                                                          Navigator.of(context)
+                                                                              .pop();
+                                                                        },
+                                                                        child: const Text(
+                                                                            'Delete'),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              },
+                                                              icon: Icon(Icons
+                                                                  .delete)),
+                                                        );
+                                                      }).toList(),
+                                                    );
+                                                  }
+                                                } else {
+                                                  return const Center(
+                                                    child:
+                                                        Text('getting error'),
+                                                  );
+                                                }
+                                            }
+                                          });
+                                      // ListView.builder(
+                                      //   itemCount: reportList.length,
+                                      //   itemBuilder:
+                                      //       (BuildContext context, int index) {
+                                      //     return ListTile(
+                                      //       title:
+                                      //           Text(reportList[index].title),
+                                      //       subtitle:
+                                      //           Text(reportList[index].issue),
+                                      //       trailing: IconButton(
+                                      //         icon: Icon(Icons.close),
+                                      //         onPressed: () {
+                                      //           // delete report
+                                      //           setState(() {
+                                      //             reportList.removeAt(index);
+                                      //           });
+                                      //           Navigator.pop(context);
+                                      //         },
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      // );
+                                    },
+                                  );
                                 },
                                 child: Chip(
                                   elevation: 10,
@@ -445,13 +558,11 @@ class _FormulaDetailsScreenState extends State<FormulaDetailsScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                             ]),
                       ),
                     ),
                   ),
-            top: 10,
-            right: 10,
           )
         ],
       ),

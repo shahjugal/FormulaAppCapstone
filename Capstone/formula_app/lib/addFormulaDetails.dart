@@ -9,14 +9,14 @@ class AddFormulaDetails extends StatefulWidget {
   final String schoolDocId;
   final String majorDocId;
   final String courseDocId;
-  final String courseName;
+  // final String courseName;
 
   const AddFormulaDetails({
     super.key,
     required this.courseDocId,
     required this.majorDocId,
     required this.schoolDocId,
-    required this.courseName,
+    // required this.courseName,
   });
 
   @override
@@ -313,17 +313,17 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                       parametersImageUrl = "";
                     }
                     if (nameController.text.isEmpty ||
-                            nameController.text == null ||
+                            // nameController.text == null ||
                             descriptionController.text.isEmpty ||
-                            descriptionController.text == null ||
+                            // descriptionController.text == null ||
                             applicationsController.text.isEmpty ||
-                            applicationsController.text == null ||
+                            // applicationsController.text == null ||
                             tagsController.text.isEmpty ||
-                            tagsController.text == null ||
+                            // tagsController.text == null ||
                             linksController.text.isEmpty ||
-                            linksController.text == null ||
-                            physicalSignificance.text.isEmpty ||
-                            physicalSignificance.text == null
+                            // linksController.text == null ||
+                            physicalSignificance.text.isEmpty
+                        // physicalSignificance.text == null
                         //formulaImageUrl == null ||
                         // parametersImageUrl == null
                         ) {
@@ -334,8 +334,8 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(erMsg);
                     } else {
-                      print(
-                          " === for URL add function ==== ${formulaImageUrl}");
+                      // print(
+                      //     " === for URL add function ==== ${formulaImageUrl}");
                       await stream.add({
                         'name': nameController.text,
                         'description': descriptionController.text,
@@ -345,14 +345,13 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                         'physical': physicalSignificance.text,
                         'formulaurl': formulaImageUrl,
                         'parameterurl': parametersImageUrl,
-                        'views':1,
+                        'count': 0,
                         // 'formula': formulaController.text,
                       });
 
                       tagsController.clear();
                       linksController.clear();
                       applicationsController.clear();
-                      // formulaController.clear();
                       descriptionController.clear();
                       nameController.clear();
                       physicalSignificance.clear();

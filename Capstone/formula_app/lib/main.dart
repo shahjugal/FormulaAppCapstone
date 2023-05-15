@@ -10,26 +10,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:http/http.dart' as http;
 
-
-
 late Box box;
-
-
 
 Future<bool> checkInternetConnectivity() async {
   try {
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
     return response.statusCode == 200;
   } catch (e) {
     return false;
   }
 }
 
-
 void main() async {
-
-  
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -40,29 +33,46 @@ void main() async {
 
   bool connected = await checkInternetConnectivity();
 
-  if(!connected) runApp(NetErrorScreen());
-  else runApp(MyApp());
+  if (!connected)
+    runApp(NetErrorScreen());
+  else
+    runApp(MyApp());
 }
 
-  class NetErrorScreen extends StatelessWidget {
+class NetErrorScreen extends StatelessWidget {
   const NetErrorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Center(child: Column(
-      children: [
-        SizedBox(height: 50,),
-        Icon(CupertinoIcons.antenna_radiowaves_left_right, color: Colors.red, size: 200,),
-        SizedBox(height: 10,),
-        Text("Network Error", style: TextStyle(fontSize: 20, color: Colors.red)),
-        SizedBox(height: 10,),
-        Text("Check your internet and relaunch app", style: TextStyle(fontSize: 10, color: Colors.red)),
-        SizedBox(height: 50,),
-        Text("If Issue persists contact us.", style: TextStyle(fontSize: 10, color: Colors.red)),
-        
-      ],
-    ),
+        home: Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 50,
+          ),
+          Icon(
+            CupertinoIcons.antenna_radiowaves_left_right,
+            color: Colors.red,
+            size: 200,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text("Network Error",
+              style: TextStyle(fontSize: 20, color: Colors.red)),
+          SizedBox(
+            height: 10,
+          ),
+          Text("Check your internet and relaunch app",
+              style: TextStyle(fontSize: 10, color: Colors.red)),
+          SizedBox(
+            height: 50,
+          ),
+          Text("If Issue persists contact us.",
+              style: TextStyle(fontSize: 10, color: Colors.red)),
+        ],
+      ),
     ));
   }
 }
