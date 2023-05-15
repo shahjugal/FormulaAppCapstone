@@ -16,6 +16,7 @@ class FormulaListUI extends StatefulWidget {
     required this.majorDocId,
     required this.schoolDocId,
     required this.courseName,
+    
   });
 
   @override
@@ -37,20 +38,7 @@ class _FormulaListUIState extends State<FormulaListUI> {
     super.dispose();
   }
 
-  Future<void> updateFormulaViews(String formulaId) async {
-  final formulaRef = FirebaseFirestore.instance
-      .collection('FormulaApp')
-        .doc(widget.schoolDocId)
-        .collection('majors')
-        .doc(widget.majorDocId)
-        .collection('courses')
-        .doc(widget.courseDocId)
-        .collection('formula')
-        .doc(formulaId);
 
-  // Increment the "Views" field
-  await formulaRef.update({'views': FieldValue.increment(1)});
-}
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +129,6 @@ class _FormulaListUIState extends State<FormulaListUI> {
                                         links: data['links'],
                                         
                                         courseDocId: widget.courseDocId,
-                                        courseName: widget.courseName,
                                         majorDocId: widget.majorDocId,
                                         schoolDocId: widget.schoolDocId,
                                         docId: document.id,
@@ -182,13 +169,16 @@ class _FormulaListUIState extends State<FormulaListUI> {
                               ),
                             ],
                           ),
-                          onTap: () async {
-                            await updateFormulaViews(document.id);
+                          onTap: () {
                             // print("formula === ${data['relatedcourses']}");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FormulaDetailsScreen(
+                                  courseDocId: widget.courseDocId,
+                                        majorDocId: widget.majorDocId,
+                                        schoolDocId: widget.schoolDocId,
+                                        docId: document.id,
                                   applications: (data['applications']),
                                   description: data['description'],
                                   physical: data['physical'],
