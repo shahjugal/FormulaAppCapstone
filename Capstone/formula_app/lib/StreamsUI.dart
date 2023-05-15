@@ -71,19 +71,6 @@ class _StreamsUIState extends State<StreamsUI> {
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              final newMajorName = await openDialog();
-              if (newMajorName == null || newMajorName.isEmpty) return;
-              await majorStream.add({'name': newMajorName});
-            },
-          ),
-        ],
       ),
       backgroundColor: Colors.white,
       body: StreamBuilder<QuerySnapshot>(
@@ -135,42 +122,6 @@ class _StreamsUIState extends State<StreamsUI> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                            title: const Text('data'),
-                                            content: const Text(
-                                                'Are you sure you want to delete?'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: const Text('CANCEL'),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  majorStream
-                                                      .doc(document.id)
-                                                      .delete();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('DELETE'),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
                                 Expanded(
                                   child: Center(
                                     child: Icon(

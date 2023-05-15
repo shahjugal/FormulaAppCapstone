@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:formula_app/formuladetailsscreen.dart';
+
+import 'formuladetailsscreen.dart';
 
 class SearchTags extends StatefulWidget {
   const SearchTags({super.key});
@@ -17,13 +18,13 @@ class _SearchTagsState extends State<SearchTags> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: const Text('Search'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             child: Material(
               elevation: 5,
               child: TextField(
@@ -35,7 +36,7 @@ class _SearchTagsState extends State<SearchTags> {
                 decoration: InputDecoration(
                   border: InputBorder.none, // Remove the border from text field
                   hintText: 'Search...',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontStyle: FontStyle.italic,
                   ),
@@ -54,12 +55,12 @@ class _SearchTagsState extends State<SearchTags> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else {
                       return enteredText == null || enteredText == ""
-                          ? Center(
+                          ? const Center(
                               child: Text('Enter something to search for...'),
                             )
                           : ListView(
@@ -67,6 +68,11 @@ class _SearchTagsState extends State<SearchTags> {
                                 ...snapshot.data!.docs
                                     .where((QueryDocumentSnapshot<Object?>
                                             element) =>
+                                        element['name']
+                                            .toString()
+                                            .toLowerCase()
+                                            .contains(
+                                                enteredText!.toLowerCase()) ||
                                         element['tags']
                                             .toString()
                                             .toLowerCase()
@@ -107,16 +113,16 @@ class _SearchTagsState extends State<SearchTags> {
                                         .id;
 
                                     print(
-                                        "docId search ======= ${searchSchoolId}");
+                                        "docId search ======= $searchSchoolId");
 
                                     return Container(
-                                      margin: EdgeInsets.all(8),
+                                      margin: const EdgeInsets.all(8),
                                       child: Material(
                                         elevation: 5,
                                         child: ListTile(
                                           title: Text(
                                             searchName,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -133,7 +139,7 @@ class _SearchTagsState extends State<SearchTags> {
                                                     child: Chip(
                                                       label: Text(
                                                         e.trim(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
                                                         ),
@@ -172,8 +178,9 @@ class _SearchTagsState extends State<SearchTags> {
                                               ),
                                             );
                                           },
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 8),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 16, vertical: 8),
                                           tileColor: Colors.white,
                                           minVerticalPadding: 12,
                                         ),
@@ -181,12 +188,12 @@ class _SearchTagsState extends State<SearchTags> {
                                     );
                                   },
                                 ),
-                                Center(
+                                const Center(
                                     child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8.0),
                                   child: Text("End of search results."),
                                 )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
                               ],

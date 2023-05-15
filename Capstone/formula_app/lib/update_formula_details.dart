@@ -21,7 +21,7 @@ class UpdateFormulaDetails extends StatefulWidget {
   final String docId;
 
   final String tags;
-  UpdateFormulaDetails({
+  const UpdateFormulaDetails({super.key, 
     required this.name,
     required this.description,
     required this.applications,
@@ -84,7 +84,7 @@ class _UpdateFormulaDetailsState extends State<UpdateFormulaDetails> {
       if (formulaImageFile == null) return;
       final String imgDevicePath = formulaImageFile.path;
       final String imgID =
-          "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
+          "${nameController.text} " " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
           FirebaseStorage.instance.ref().child('formula test').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
@@ -105,7 +105,7 @@ class _UpdateFormulaDetailsState extends State<UpdateFormulaDetails> {
       if (parameterImageFile == null) return;
       final String imgDevicePath = parameterImageFile.path;
       final String imgID =
-          "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
+          "${nameController.text} " " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
           FirebaseStorage.instance.ref().child('parameters test').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
@@ -314,12 +314,8 @@ class _UpdateFormulaDetailsState extends State<UpdateFormulaDetails> {
               Center(
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (formulaImageUrl == null) {
-                      formulaImageUrl = widget.formulaurl;
-                    }
-                    if (parametersImageUrl == null) {
-                      parametersImageUrl = widget.parameterurl;
-                    }
+                    formulaImageUrl ??= widget.formulaurl;
+                    parametersImageUrl ??= widget.parameterurl;
                     if (nameController.text.isEmpty ||
                         descriptionController.text.isEmpty ||
                         applicationsController.text.isEmpty ||

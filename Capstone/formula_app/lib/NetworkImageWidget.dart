@@ -17,9 +17,9 @@ class NetworkImageWidget extends StatelessWidget {
               errorBuilder: (BuildContext context, Object exception,
                   StackTrace? stackTrace) {
                 return Container(
-                    child: Row(
+                    child: const Row(
                   children: [
-                    const Icon(Icons.error),
+                    Icon(Icons.error),
                     SizedBox(
                       width: 10,
                     ),
@@ -29,7 +29,7 @@ class NetworkImageWidget extends StatelessWidget {
               },
             ),
           )
-        : Center(
+        : const Center(
             child: Text('URL is Null'),
           );
   }

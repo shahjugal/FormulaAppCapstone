@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -33,10 +30,11 @@ void main() async {
 
   bool connected = await checkInternetConnectivity();
 
-  if (!connected)
-    runApp(NetErrorScreen());
-  else
+  if (!connected) {
+    runApp(const NetErrorScreen());
+  } else {
     runApp(MyApp());
+  }
 }
 
 class NetErrorScreen extends StatelessWidget {
@@ -44,7 +42,7 @@ class NetErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
         home: Center(
       child: Column(
         children: [
@@ -84,6 +82,8 @@ class MyApp extends StatelessWidget {
     'https://ahduni.edu.in/site/templates/images/media-photo23.jpg',
     'https://ahduni.edu.in/site/templates/images/media-photo24.jpg'
   ];
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -92,13 +92,13 @@ class MyApp extends StatelessWidget {
         // Define the default brightness and colors.
         primaryColor: const Color.fromRGBO(128, 18, 20, 1),
       ),
-      home: ImageScreen(
+      home: const ImageScreen(
         imageUrl:
             'https://ahduni.edu.in/site/assets/files/1/default_logo_final_png.png',
         // 'https://www.theplan.it/cdn-cgi/image/fit=contain,width=830/images/409.jpg',
       ),
       routes: {
-        TabSelectorUI.routeName: (context) => TabSelectorUI(),
+        TabSelectorUI.routeName: (context) => const TabSelectorUI(),
       },
     );
   }

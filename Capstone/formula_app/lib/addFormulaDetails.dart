@@ -67,20 +67,18 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
       if (formulaImageFile == null) return;
       final String imgDevicePath = formulaImageFile.path;
       final String imgID =
-          "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
+          "${nameController.text} " " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
           FirebaseStorage.instance.ref().child('formula').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       formulaImageUrl = await imgRef.getDownloadURL();
-      if (formulaImageUrl == null) {
-        formulaImageUrl = "";
-      }
+      formulaImageUrl ??= "";
       // imgURL = await imgRef.getDownloadURL();
       final formulaimageTemporary = File(imgDevicePath);
       setState(() {
         this.formulaImageFile = formulaimageTemporary;
 
-        print("=== for url mage ====${formulaImageUrl}");
+        print("=== for url mage ====$formulaImageUrl");
         // print("=== url mage ====${formulaImageFile}");
       });
     } on PlatformException catch (e) {
@@ -95,20 +93,18 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
       if (parameterImageFile == null) return;
       final String imgDevicePath = parameterImageFile.path;
       final String imgID =
-          "${nameController.text} " + " ${imgDevicePath.replaceAll('/', '')}";
+          "${nameController.text} " " ${imgDevicePath.replaceAll('/', '')}";
       Reference imgRef =
           FirebaseStorage.instance.ref().child('parameters').child(imgID);
       await imgRef.putFile(File(imgDevicePath));
       parametersImageUrl = await imgRef.getDownloadURL();
-      if (parametersImageUrl == null) {
-        parametersImageUrl = "";
-      }
+      parametersImageUrl ??= "";
       // imgURL = await imgRef.getDownloadURL();
       final parametersimageTemporary = File(imgDevicePath);
       setState(() {
         this.parameterImageFile = parametersimageTemporary;
 
-        print("=== para url mage ====${parametersImageUrl}");
+        print("=== para url mage ====$parametersImageUrl");
         // print("=== url mage ====${parameterImageFile}");
       });
     } on PlatformException catch (e) {
@@ -300,7 +296,7 @@ class _AddFormulaDetailsState extends State<AddFormulaDetails> {
                 ),
                 controller: tagsController,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
 

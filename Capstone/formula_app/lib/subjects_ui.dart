@@ -43,21 +43,13 @@ class _SubjectsUIState extends State<SubjectsUI> {
     Future<String?> openDialog() => showDialog<String>(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Course Name'),
+            title: const Text('Course Name'),
             content: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'Enter New Course Name'),
+              decoration:
+                  const InputDecoration(hintText: 'Enter New Course Name'),
               controller: controller,
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(controller.text);
-                  controller.clear();
-                },
-                child: Text('Submit'),
-              )
-            ],
           ),
         );
 
@@ -65,25 +57,11 @@ class _SubjectsUIState extends State<SubjectsUI> {
       appBar: AppBar(
         title: Text(
           widget.majorName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              final newSubName = await openDialog();
-              if (newSubName == null || newSubName.isEmpty) return;
-              await stream.add({'name': newSubName}).then(
-                  (value) => print('major added'));
-            },
-          ),
-        ],
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
@@ -114,38 +92,7 @@ class _SubjectsUIState extends State<SubjectsUI> {
                       return Card(
                         child: ListTile(
                           title: Text(data['name']),
-                          trailing: Wrap(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      title: const Text('data'),
-                                      content: Text(
-                                          'Are you sure you want to delete?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(),
-                                          child: const Text('CANCEL'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            stream.doc(document.id).delete();
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('DELETE'),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+
                           //subtitle: Text(data['definition']),
                           onTap: () {
                             Navigator.push(

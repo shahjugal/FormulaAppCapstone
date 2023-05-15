@@ -16,7 +16,7 @@ class BookmarkDetailsScreen extends StatefulWidget {
   final String parameterurl;
   final String physical;
 
-  BookmarkDetailsScreen({
+  const BookmarkDetailsScreen({super.key, 
     required this.name,
     required this.description,
     // required this.formula,
@@ -153,7 +153,7 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
               children: ((widget.applications).split(';'))
                   .map(
                     (app) => Text(
-                      ('• ' + (' $app').trim()),
+                      ('• ${(' $app').trim()}'),
                     ),
                   )
                   .toList(),
@@ -185,8 +185,8 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
                     padding: const EdgeInsets.only(right: 8.0),
                     child: GestureDetector(
                       onTap: () async {
-                        final Uri _url = Uri.parse(widget.links[index].trim());
-                        if (!await launchUrl(_url)) {
+                        final Uri url = Uri.parse(widget.links[index].trim());
+                        if (!await launchUrl(url)) {
                           const erMsg = SnackBar(
                             content: Text('Error Launching URL!'),
                             backgroundColor: Colors.red,
@@ -197,11 +197,11 @@ class _BookmarkDetailsScreenState extends State<BookmarkDetailsScreen> {
                       },
                       child: Container(
                         child: Chip(
-                          avatar: Icon(Icons.link_outlined),
+                          avatar: const Icon(Icons.link_outlined),
                           elevation: 10,
                           label: Text(
                             extractDomain(widget.links[index].trim()),
-                            style: TextStyle(color: Colors.blue),
+                            style: const TextStyle(color: Colors.blue),
                           ),
                         ),
                       ),

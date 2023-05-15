@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:formula_app/StreamsUI.dart';
+
+import 'StreamsUI.dart';
 
 class SchoolUI extends StatefulWidget {
+  const SchoolUI({super.key});
+
   @override
   State<SchoolUI> createState() => _SchoolUIState();
 }
@@ -55,18 +58,6 @@ class _SchoolUIState extends State<SchoolUI> {
         title: const Text(
           'Schools',
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-            ),
-            onPressed: () async {
-              final newSchoolName = await openDialog();
-              if (newSchoolName == null || newSchoolName.isEmpty) return;
-              await schoolStream.add({'name': newSchoolName});
-            },
-          ),
-        ],
         elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
@@ -82,11 +73,11 @@ class _SchoolUIState extends State<SchoolUI> {
                 child: CircularProgressIndicator(),
               );
             default:
-            if(snapshot.hasError){
-              return  Center(
-                    child: Text(snapshot.error.toString()),
-                  );
-            }
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
+                );
+              }
               if (snapshot.hasData) {
                 //print(snapshot.data!.docs.length);
                 if (snapshot.data!.docs.isEmpty) {
@@ -125,42 +116,6 @@ class _SchoolUIState extends State<SchoolUI> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AlertDialog(
-                                            title: const Text('data'),
-                                            content: const Text(
-                                                'Are you sure you want to delete?'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: const Text('CANCEL'),
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  schoolStream
-                                                      .doc(document.id)
-                                                      .delete();
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('DELETE'),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
                                 Expanded(
                                   child: Center(
                                     child: Icon(

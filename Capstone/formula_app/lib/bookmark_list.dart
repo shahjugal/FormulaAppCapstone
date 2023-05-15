@@ -7,13 +7,13 @@ import 'bookmark_details.dart';
 class BookmarkList extends StatefulWidget {
   static _BookmarkListState? _bookmarkListState;
 
-  static final BookmarkList _singleton = BookmarkList._internal();
+  static const BookmarkList _singleton = BookmarkList._internal();
 
   factory BookmarkList() {
     return _singleton;
   }
 
-  BookmarkList._internal();
+  const BookmarkList._internal();
 
   @override
   _BookmarkListState createState() {
@@ -70,7 +70,7 @@ class _BookmarkListState extends State<BookmarkList> {
         title: const Text('Bookmarks'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: (_items.length == 0) ? const Center(child: Text("No formula bookmarked.")) :
+      body: (_items.isEmpty) ? const Center(child: Text("No formula bookmarked.")) :
       ListView.builder(
         itemCount: _items.length,
         itemBuilder: (_, index) {
@@ -96,7 +96,7 @@ class _BookmarkListState extends State<BookmarkList> {
               },
               title: Text(currentItem['name']),
               trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () async {
                     showDialog(
                       context: context,

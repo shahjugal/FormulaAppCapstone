@@ -1,8 +1,7 @@
+import 'package:AU_Formula_App_user/search_tags.dart';
 import 'package:flutter/material.dart';
-import 'package:formula_app/SchoolsUI.dart';
-import 'package:formula_app/search_tags.dart';
-import 'package:formula_app/search_tags.dart';
 
+import 'SchoolsUI.dart';
 import 'Settings.dart';
 
 import 'bookmark_list.dart';
@@ -10,6 +9,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class TabSelectorUI extends StatefulWidget {
   static const routeName = '/TabBarUI';
+
+  const TabSelectorUI({super.key});
 
   @override
   _TabSelectorUIState createState() => _TabSelectorUIState();
@@ -21,32 +22,26 @@ class _TabSelectorUIState extends State<TabSelectorUI>
 
   List<Widget> _buildScreens() {
     return [
-      SchoolUI(),
+      const SchoolUI(),
       const SearchTags(),
       BookmarkList(),
-      const SettingsUI(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home_outlined),
+        icon: const Icon(Icons.home_outlined),
         activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.search),
+        icon: const Icon(Icons.search),
         activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.bookmark_border_outlined),
-        activeColorPrimary: Theme.of(context).primaryColor,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: Icon(Icons.info_sharp),
+        icon: const Icon(Icons.bookmark_border_outlined),
         activeColorPrimary: Theme.of(context).primaryColor,
         inactiveColorPrimary: Colors.grey,
       ),
@@ -79,11 +74,11 @@ class _TabSelectorUIState extends State<TabSelectorUI>
         ),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties(
+        itemAnimationProperties: const ItemAnimationProperties(
           duration: Duration(milliseconds: 200),
           curve: Curves.ease,
         ),
-        screenTransitionAnimation: ScreenTransitionAnimation(
+        screenTransitionAnimation: const ScreenTransitionAnimation(
           animateTabTransition: true,
           curve: Curves.ease,
           duration: Duration(milliseconds: 200),

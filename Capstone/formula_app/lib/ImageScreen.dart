@@ -1,12 +1,12 @@
-// ignore: file_names
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:formula_app/TabBarUI.dart';
+
+import 'TabBarUI.dart';
 
 class ImageScreen extends StatefulWidget {
   final String imageUrl;
 
-  ImageScreen({required this.imageUrl});
+  const ImageScreen({Key? key, required this.imageUrl}) : super(key: key);
 
   @override
   _ImageScreenState createState() => _ImageScreenState();
@@ -18,9 +18,10 @@ class _ImageScreenState extends State<ImageScreen> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer(Duration(seconds: 5), () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => TabSelectorUI()));
+    _timer = Timer(const Duration(seconds: 5), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const TabSelectorUI()),
+      );
     });
   }
 
@@ -36,51 +37,30 @@ class _ImageScreenState extends State<ImageScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: Image(image: AssetImage('assets/au_logo.png'),),
+            child: const Image(
+              image: AssetImage('assets/au_logo.png'),
+            ),
           ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Container(
-          //     height: MediaQuery.of(context).size.height / 4,
-          //     decoration: BoxDecoration(
-          //       gradient: LinearGradient(
-          //         colors: [Colors.black.withOpacity(0.8), Colors.transparent],
-          //         begin: Alignment.bottomCenter,
-          //         end: Alignment.topCenter,
-          //       ),
-          //     ),
-          //     child: Padding(
-          //       padding: EdgeInsets.all(16.0),
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.end,
-          //         children: [
-          //           Text(
-          //             "Formula App",
-          //             style: TextStyle(
-          //               color: Colors.black,
-          //               fontSize: 32,
-          //               fontWeight: FontWeight.bold,
-          //             ),
-          //           ),
-          //           SizedBox(height: 16.0),
-          //           Text(
-          //             "Every formula on your finger tips!",
-          //             style: TextStyle(
-          //               color: Colors.black.withOpacity(0.8),
-          //               fontSize: 16,
-          //               fontWeight: FontWeight.w500,
-          //             ),
-          //             textAlign: TextAlign.center,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Colors.black.withOpacity(0.5),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'STUDENT MODE',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
